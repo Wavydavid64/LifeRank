@@ -52,11 +52,6 @@ struct CharacterView: View {
                     }
                 }
 
-                Section("Skills") {
-                    ForEach(SeedData.skills) { skill in
-                        LabeledContent(skill.name, value: "\(stats.skillXP[skill.id] ?? 0)")
-                    }
-                }
             }
             .navigationTitle("Character")
         }

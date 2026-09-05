@@ -14,6 +14,9 @@ struct ContentView: View {
             Tab("Character", systemImage: "person.crop.square") {
                 CharacterView()
             }
+            Tab("Skills", systemImage: "list.bullet") {
+                SkillsView()
+            }
             Tab("Log", systemImage: "plus.circle") {
                 LogActivityView()
             }
