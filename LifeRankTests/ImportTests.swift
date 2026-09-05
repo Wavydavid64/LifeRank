@@ -35,13 +35,17 @@ struct ImportTests {
 
     @Test func healthKitWorkoutTypesMapToSkills() {
         #expect(WorkoutMapping.skillID(for: .running) == "running")
+        #expect(WorkoutMapping.skillID(for: .cycling) == "cycling")
         #expect(WorkoutMapping.skillID(for: .hiking) == "hiking")
+        #expect(WorkoutMapping.skillID(for: .paddleSports) == "kayaking")
         #expect(WorkoutMapping.skillID(for: .traditionalStrengthTraining) == "strength-training")
+        #expect(WorkoutMapping.skillID(for: .yoga) == "yoga")
+        #expect(WorkoutMapping.skillID(for: .flexibility) == "stretching")
     }
 
     @Test func untrackedWorkoutTypesMapToNothing() {
         #expect(WorkoutMapping.skillID(for: .swimming) == nil)
-        #expect(WorkoutMapping.skillID(for: .yoga) == nil)
+        #expect(WorkoutMapping.skillID(for: .boxing) == nil)
     }
 
     @Test func everyMappedSkillExistsInSeedData() {

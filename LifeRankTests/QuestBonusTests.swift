@@ -129,11 +129,26 @@ struct QuestBonusTests {
         #expect(try store.stats().skillXP["hiking"] == 170)
     }
 
-    @Test func seededBonusesStaySmallRelativeToTheActivity() throws {
-        // §16: bonus XP must not overwhelm the XP earned by doing the activity.
+    @Test func seededBonusesAreNeverNegativeOrOversized() throws {
         for quest in QuestSeed.quests {
             #expect(quest.bonusXP >= 0, "\(quest.id) has a negative bonus")
             #expect(quest.bonusXP <= 30, "\(quest.id) bonus of \(quest.bonusXP) is too large")
+        }
+    }
+
+    /// §16: bonus XP must not overwhelm the XP earned by actually doing the
+    /// activity. For a minutes quest that comparison is exact — the target is
+    /// the XP, since XP runs at one per minute — so the ratio can be asserted
+    /// rather than guessed at with a flat cap.
+    @Test func minutesQuestBonusesStaySmallRelativeToTheWorkTheyRequire() throws {
+        for quest in QuestSeed.quests where quest.objective.metric == .minutes {
+            let earned = quest.objective.target * ProgressionEngine.xpPerMinute
+            let ratio = Double(quest.bonusXP) / earned
+
+            #expect(
+                ratio <= 0.30,
+                "\(quest.id) pays \(quest.bonusXP) XP for \(Int(earned)) XP of work — \(Int(ratio * 100))% is too much of the reward"
+            )
         }
     }
 }

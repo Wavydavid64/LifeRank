@@ -8,8 +8,12 @@ enum WorkoutMapping {
 
     static let skillIDsByWorkoutType: [HKWorkoutActivityType: Skill.ID] = [
         .running: "running",
+        .cycling: "cycling",
         .hiking: "hiking",
+        .paddleSports: "kayaking",
         .traditionalStrengthTraining: "strength-training",
+        .yoga: "yoga",
+        .flexibility: "stretching",
     ]
 
     /// Nil for workout types LifeRank does not track. Unmapped workouts are

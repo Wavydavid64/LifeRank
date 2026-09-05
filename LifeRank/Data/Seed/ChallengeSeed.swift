@@ -7,7 +7,80 @@ import Foundation
 /// expose sets, reps or weight through Apple Health (§20).
 enum ChallengeSeed {
 
-    static let challenges: [SkillChallenge] = running + strengthTraining + hiking + calligraphy
+    static let challenges: [SkillChallenge] =
+        running + cycling + hiking + kayaking
+        + strengthTraining + yoga + stretching
+        + calligraphy + painting + musicPractice + reading
+
+    private static let cycling: [SkillChallenge] = [
+        challenge("cycling", .e, "cycle-e", "Ride 10 miles", ActivityCriterion(minimumMiles: 10)),
+        challenge("cycling", .d, "cycle-d", "Ride 25 miles", ActivityCriterion(minimumMiles: 25)),
+        challenge("cycling", .c, "cycle-c", "Ride 50 miles", ActivityCriterion(minimumMiles: 50)),
+        challenge("cycling", .b, "cycle-b", "Ride a century", ActivityCriterion(minimumMiles: 100)),
+        manualChallenge("cycling", .a, "cycle-a", "Complete a multi-day tour"),
+        manualChallenge("cycling", .s, "cycle-s", "Complete a long-distance tour"),
+    ]
+
+    private static let kayaking: [SkillChallenge] = [
+        challenge("kayaking", .e, "kayak-e", "Paddle 2 miles", ActivityCriterion(minimumMiles: 2)),
+        challenge("kayaking", .d, "kayak-d", "Paddle 5 miles", ActivityCriterion(minimumMiles: 5)),
+        challenge("kayaking", .c, "kayak-c", "Paddle 10 miles", ActivityCriterion(minimumMiles: 10)),
+        challenge("kayaking", .b, "kayak-b", "Paddle 15 miles", ActivityCriterion(minimumMiles: 15)),
+        manualChallenge("kayaking", .a, "kayak-a", "Complete an open-water crossing"),
+        manualChallenge("kayaking", .s, "kayak-s", "Complete a multi-day expedition"),
+    ]
+
+    private static let yoga: [SkillChallenge] = [
+        challenge("yoga", .e, "yoga-e", "Complete a 30 minute session",
+                  ActivityCriterion(minimumMinutes: 30)),
+        challenge("yoga", .d, "yoga-d", "Complete a 60 minute session",
+                  ActivityCriterion(minimumMinutes: 60)),
+        challenge("yoga", .c, "yoga-c", "Complete a 90 minute session",
+                  ActivityCriterion(minimumMinutes: 90)),
+        manualChallenge("yoga", .b, "yoga-b", "Hold an unsupported inversion"),
+        manualChallenge("yoga", .a, "yoga-a", "Complete an advanced sequence unaided"),
+        manualChallenge("yoga", .s, "yoga-s", "Lead a class"),
+    ]
+
+    /// Flexibility milestones are things you can see in a mirror, not things a
+    /// duration can prove, so the upper ranks are marked by hand.
+    private static let stretching: [SkillChallenge] = [
+        challenge("stretching", .e, "stretch-e", "Complete a 15 minute session",
+                  ActivityCriterion(minimumMinutes: 15)),
+        challenge("stretching", .d, "stretch-d", "Complete a 30 minute session",
+                  ActivityCriterion(minimumMinutes: 30)),
+        manualChallenge("stretching", .c, "stretch-c", "Touch your toes cold"),
+        manualChallenge("stretching", .b, "stretch-b", "Hold a full front split"),
+        manualChallenge("stretching", .a, "stretch-a", "Hold a full middle split"),
+        manualChallenge("stretching", .s, "stretch-s", "Hold a full bridge from standing"),
+    ]
+
+    private static let painting: [SkillChallenge] = [
+        manualChallenge("painting", .e, "paint-e", "Complete a finished piece"),
+        manualChallenge("painting", .d, "paint-d", "Complete a study from life"),
+        manualChallenge("painting", .c, "paint-c", "Complete a full composition"),
+        manualChallenge("painting", .b, "paint-b", "Complete a piece worth framing"),
+        manualChallenge("painting", .a, "paint-a", "Complete a body of work"),
+        manualChallenge("painting", .s, "paint-s", "Exhibit your work"),
+    ]
+
+    private static let musicPractice: [SkillChallenge] = [
+        manualChallenge("music-practice", .e, "music-e", "Play a piece from memory"),
+        manualChallenge("music-practice", .d, "music-d", "Perform for someone"),
+        manualChallenge("music-practice", .c, "music-c", "Perform in public"),
+        manualChallenge("music-practice", .b, "music-b", "Learn a full-length work"),
+        manualChallenge("music-practice", .a, "music-a", "Perform a full recital"),
+        manualChallenge("music-practice", .s, "music-s", "Compose and perform your own work"),
+    ]
+
+    private static let reading: [SkillChallenge] = [
+        manualChallenge("reading", .e, "read-e", "Finish a book"),
+        manualChallenge("reading", .d, "read-d", "Finish five books"),
+        manualChallenge("reading", .c, "read-c", "Finish a demanding technical work"),
+        manualChallenge("reading", .b, "read-b", "Finish twenty-five books"),
+        manualChallenge("reading", .a, "read-a", "Finish a full-length work in a second language"),
+        manualChallenge("reading", .s, "read-s", "Finish one hundred books"),
+    ]
 
     private static let running: [SkillChallenge] = [
         challenge("running", .e, "run-e", "Complete a continuous 5K",
