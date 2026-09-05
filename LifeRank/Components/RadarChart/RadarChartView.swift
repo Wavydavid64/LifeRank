@@ -1,17 +1,23 @@
 import SwiftUI
 
 /// Eight-axis attribute chart drawn with Canvas and Path (DESIGN.md §6).
-/// Takes levels already computed by the domain layer — no XP math here.
+/// Takes values already computed by the domain layer — no XP math here.
+/// Values are fractional levels, so the shape moves on every session rather
+/// than jumping only when a level is crossed.
 struct RadarChartView: View {
-    let levels: [Attribute: Int]
+    let values: [Attribute: Double]
+    /// Attribute level the outer ring represents, supplied per rank so the
+    /// polygon grows within a rank and the chart widens on promotion.
+    let ceiling: Double
 
     private let axes = Attribute.allCases
     private let ringCount = 4
 
-    /// Scale the chart to the strongest attribute, with a floor so a new
-    /// character's empty chart neither divides by zero nor reads as complete.
+    /// Normally the rank's ceiling, so growth is visible. Outgrowing your rank
+    /// pushes the ring out to the strongest attribute instead of clipping the
+    /// polygon outside the chart.
     private var scale: Double {
-        Double(max(levels.values.max() ?? 0, 5))
+        max(ceiling, values.values.max() ?? 0)
     }
 
     var body: some View {
@@ -37,7 +43,7 @@ struct RadarChartView: View {
 
             var build = Path()
             for (index, attribute) in axes.enumerated() {
-                let fraction = Double(levels[attribute] ?? 0) / scale
+                let fraction = (values[attribute] ?? 0) / scale
                 let vertex = point(center: center, radius: radius * fraction, index: index)
                 index == 0 ? build.move(to: vertex) : build.addLine(to: vertex)
             }

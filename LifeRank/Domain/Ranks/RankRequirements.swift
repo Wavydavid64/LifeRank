@@ -21,4 +21,22 @@ enum RankRequirements {
     static func overallXP(for rank: Rank) -> Int? {
         overallXP[rank]
     }
+
+    /// The attribute level a rank's chart is scaled to — roughly where a
+    /// primary attribute lands by the time that rank is cleared, with headroom.
+    /// Attributes grow inside the band during a rank, and promotion widens the
+    /// band, so progression stays visible instead of self-normalising away.
+    ///
+    /// Every rank must have a value: a missing one would collapse the scale.
+    static func attributeCeiling(for rank: Rank) -> Int {
+        switch rank {
+        case .f: return 8
+        case .e: return 15
+        case .d: return 25
+        case .c: return 40
+        case .b: return 60
+        case .a: return 90
+        case .s: return 120
+        }
+    }
 }

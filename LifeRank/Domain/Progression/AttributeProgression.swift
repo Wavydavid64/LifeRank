@@ -2,11 +2,15 @@ import Foundation
 
 /// Turns accumulated attribute XP into a level. Levels get progressively more
 /// expensive (DESIGN.md §5): reaching level n costs `baseLevelCost * n`, so the
-/// first level costs 100 XP, the second 200 more, the third 300 more.
+/// first level costs 25 XP, the second 50 more, the third 75 more.
 enum AttributeProgression {
 
-    /// Balance constant (§34). Tuning value, not final.
-    static let baseLevelCost = 100
+    /// Balance constant (§34). Tuned so a year of steady training on a primary
+    /// attribute (~8,400 XP) lands near level 25, matching the numeric range in
+    /// §23's dashboard. Levels then decelerate: ~3 after a week, ~12 after three
+    /// months, ~18 after six. Rebalancing is free — levels are derived from the
+    /// XP ledger, so changing this recomputes history rather than migrating it.
+    static let baseLevelCost = 25
 
     /// Total XP that must be accumulated to stand at `level`.
     static func cumulativeXP(forLevel level: Int) -> Int {

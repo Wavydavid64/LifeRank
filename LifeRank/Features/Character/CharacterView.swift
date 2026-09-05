@@ -13,9 +13,12 @@ struct CharacterView: View {
 
     private var rank: Rank { .starting }
 
-    private var levels: [Attribute: Int] {
+    /// Fractional levels, so the radar responds to every session instead of
+    /// sitting still until a level boundary is crossed.
+    private var radarValues: [Attribute: Double] {
         Dictionary(uniqueKeysWithValues: Attribute.allCases.map { attribute in
-            (attribute, AttributeProgression.level(forXP: stats.attributeXP[attribute] ?? 0))
+            let progress = AttributeProgression.progress(forXP: stats.attributeXP[attribute] ?? 0)
+            return (attribute, Double(progress.level) + progress.fraction)
         })
     }
 
@@ -28,7 +31,10 @@ struct CharacterView: View {
                             .font(.largeTitle.weight(.bold))
                             .monospaced()
 
-                        RadarChartView(levels: levels)
+                        RadarChartView(
+                            values: radarValues,
+                            ceiling: Double(RankRequirements.attributeCeiling(for: rank))
+                        )
                             .aspectRatio(1, contentMode: .fit)
                     }
                     .frame(maxWidth: .infinity)
