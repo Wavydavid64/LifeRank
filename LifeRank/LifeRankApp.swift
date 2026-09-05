@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct LifeRankApp: App {
@@ -13,5 +14,6 @@ struct LifeRankApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [ActivityRecord.self, XPEventRecord.self])
     }
 }
