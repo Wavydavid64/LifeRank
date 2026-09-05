@@ -63,7 +63,8 @@ struct SkillDetailView: View {
                 .listRowBackground(Color.clear)
             }
 
-            if let nextRank = rank.next, let required = SkillRankRequirements.xpRequired(for: nextRank) {
+            if let nextRank = rank.next,
+               let required = SkillRankRequirements.xpRequired(for: nextRank, skillID: skill.id) {
                 Section("Next Rank") {
                     XPBar(current: xp, total: required, caption: "\(nextRank.displayName)-Rank")
 

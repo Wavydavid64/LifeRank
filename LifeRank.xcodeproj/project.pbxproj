@@ -14,6 +14,7 @@
 		44A8CD3A57667C2617ADA0AD /* BackupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDB12A657D85EC2407D45A4 /* BackupTests.swift */; };
 		495B9EBD47069606AB48DFBA /* QuestEvaluatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487E9A80783BEB3C8BE8DA7B /* QuestEvaluatorTests.swift */; };
 		7668A2613DE44AE156E6324E /* ProgressionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3646A7DD0EFD6A1672AC5A /* ProgressionEngineTests.swift */; };
+		788DCEAA10CCCF4E17EF9CA1 /* IntensityCaptureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33841CF8CFDC5C3F44813298 /* IntensityCaptureTests.swift */; };
 		84910BBCF870612C730E6A01 /* ActivityStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ACFEEB6B5618952E2448DD /* ActivityStoreTests.swift */; };
 		850DC7A12F68C5415CF99E25 /* SkillRankRequirementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8DC5DC1315F13BF6D2BEE /* SkillRankRequirementsTests.swift */; };
 		A4F13C93DC0F1CABC2A1565D /* SeedDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AE90B303A25775B8AECF1 /* SeedDataTests.swift */; };
@@ -43,6 +44,7 @@
 		192EDD39767C7E7A19FCA985 /* QuestBonusTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestBonusTests.swift; sourceTree = "<group>"; };
 		28FD30EECD384606CAA3B2F7 /* AttributeProgressionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AttributeProgressionTests.swift; sourceTree = "<group>"; };
 		2CE89EA42CD84908881D63FE /* PromotionEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromotionEngineTests.swift; sourceTree = "<group>"; };
+		33841CF8CFDC5C3F44813298 /* IntensityCaptureTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IntensityCaptureTests.swift; sourceTree = "<group>"; };
 		487E9A80783BEB3C8BE8DA7B /* QuestEvaluatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestEvaluatorTests.swift; sourceTree = "<group>"; };
 		4F02CCFF344F85E1AB882F3E /* ConsistencyStatsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsistencyStatsTests.swift; sourceTree = "<group>"; };
 		515B2150493C304D2F7E712C /* ActivityEditTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActivityEditTests.swift; sourceTree = "<group>"; };
@@ -61,6 +63,8 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		630C00B7304BB7FB001A8B8C /* LifeRank */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = LifeRank;
 			sourceTree = "<group>";
 		};
@@ -139,6 +143,7 @@
 				DEDB12A657D85EC2407D45A4 /* BackupTests.swift */,
 				4F02CCFF344F85E1AB882F3E /* ConsistencyStatsTests.swift */,
 				515B2150493C304D2F7E712C /* ActivityEditTests.swift */,
+				33841CF8CFDC5C3F44813298 /* IntensityCaptureTests.swift */,
 			);
 			path = LifeRankTests;
 			sourceTree = "<group>";
@@ -257,6 +262,7 @@
 				44A8CD3A57667C2617ADA0AD /* BackupTests.swift in Sources */,
 				B0CF5F1E0C40CC3BDBD4A053 /* ConsistencyStatsTests.swift in Sources */,
 				FFA9D21842CF6DC59EF1443E /* ActivityEditTests.swift in Sources */,
+				788DCEAA10CCCF4E17EF9CA1 /* IntensityCaptureTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

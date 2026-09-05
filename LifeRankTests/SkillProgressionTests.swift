@@ -32,6 +32,13 @@ struct SkillProgressionTests {
         Activity(skillID: "running", name: "5K", durationMinutes: minutes, distanceMiles: 3.2)
     }
 
+    /// Thresholds are scaled per skill by earning rate, so these read the real
+    /// requirement rather than hardcoding a number that retuning would break.
+    /// The values themselves are pinned in `SkillRankRequirementsTests`.
+    private func xpFor(_ rank: Rank, _ skillID: Skill.ID = "running") -> Int {
+        SkillRankRequirements.xpRequired(for: rank, skillID: skillID)!
+    }
+
     // MARK: - XP alone is never enough (§13)
 
     @Test func xpWithoutTheChallengeLeavesTheSkillAtF() {
@@ -43,7 +50,11 @@ struct SkillProgressionTests {
     }
 
     @Test func xpPlusChallengeAdvancesOneRank() {
-        #expect(rank(running(), xp: 500, activities: [fiveK(minutes: 26)]) == .e)
+        #expect(rank(running(), xp: xpFor(.e), activities: [fiveK(minutes: 26)]) == .e)
+    }
+
+    @Test func oneXPShortOfTheThresholdDoesNotAdvance() {
+        #expect(rank(running(), xp: xpFor(.e) - 1, activities: [fiveK(minutes: 26)]) == .f)
     }
 
     // MARK: - Walking the ladder
@@ -52,11 +63,34 @@ struct SkillProgressionTests {
     /// skill climbs two ranks at once — but stops at C, whose challenge needs
     /// sub-25.
     @Test func rankStopsAtTheFirstUnclearedChallenge() {
-        #expect(rank(running(), xp: 3_000, activities: [fiveK(minutes: 26)]) == .d)
+        // Enough XP for C, so the sub-25 challenge is what actually blocks it.
+        #expect(rank(running(), xp: xpFor(.c), activities: [fiveK(minutes: 26)]) == .d)
     }
 
     @Test func aFasterTimeClearsTheNextChallengeToo() {
-        #expect(rank(running(), xp: 3_000, activities: [fiveK(minutes: 24)]) == .c)
+        #expect(rank(running(), xp: xpFor(.c), activities: [fiveK(minutes: 24)]) == .c)
+    }
+
+    /// Stretching earns far less per session than lifting, so its thresholds
+    /// are scaled down — the same weeks of practice should reach the same rank.
+    @Test func aLowEarningSkillRanksUpOnLessXP() {
+        let stretchingE = xpFor(.e, "stretching")
+        let strengthE = xpFor(.e, "strength-training")
+
+        #expect(stretchingE < strengthE)
+
+        // stretch-e is measured, not manual: a 15 minute session clears it.
+        let stretching = SeedData.skills.first { $0.id == "stretching" }!
+        let session = Activity(skillID: "stretching", name: "Stretch", durationMinutes: 20)
+
+        #expect(
+            rank(stretching, xp: stretchingE, activities: [session]) == .e,
+            "stretching should reach E at its own scaled threshold"
+        )
+        #expect(
+            rank(stretching, xp: stretchingE, activities: []) == .f,
+            "and still not without clearing the challenge"
+        )
     }
 
     /// Ranks are consecutive: clearing a later challenge cannot skip an earlier

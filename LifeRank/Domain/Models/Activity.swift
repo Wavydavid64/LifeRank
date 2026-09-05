@@ -14,6 +14,13 @@ nonisolated struct Activity: Identifiable, Codable, Hashable {
     /// guarantee an imported workout can never award XP twice. Nil for manual entries.
     let externalIdentifier: String?
 
+    // Intensity signals, captured from Apple Health where available and nil for
+    // manual entries. Nothing consumes these yet — DESIGN.md §11 says to tune
+    // the XP formula against real usage, and recording them now is what makes
+    // that tuning retroactive rather than future-only.
+    let activeCalories: Double?
+    let averageHeartRate: Double?
+
     init(
         id: UUID = UUID(),
         skillID: Skill.ID,
@@ -22,7 +29,9 @@ nonisolated struct Activity: Identifiable, Codable, Hashable {
         durationMinutes: Double? = nil,
         distanceMiles: Double? = nil,
         notes: String? = nil,
-        externalIdentifier: String? = nil
+        externalIdentifier: String? = nil,
+        activeCalories: Double? = nil,
+        averageHeartRate: Double? = nil
     ) {
         self.id = id
         self.skillID = skillID
@@ -32,5 +41,7 @@ nonisolated struct Activity: Identifiable, Codable, Hashable {
         self.distanceMiles = distanceMiles
         self.notes = notes
         self.externalIdentifier = externalIdentifier
+        self.activeCalories = activeCalories
+        self.averageHeartRate = averageHeartRate
     }
 }

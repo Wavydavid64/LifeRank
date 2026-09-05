@@ -25,7 +25,9 @@ nonisolated enum SkillProgression {
         var current = Rank.starting
 
         while let next = current.next {
-            guard let requiredXP = SkillRankRequirements.xpRequired(for: next), xp >= requiredXP else { break }
+            guard let requiredXP = SkillRankRequirements.xpRequired(for: next, skillID: skill.id),
+                  xp >= requiredXP
+            else { break }
 
             let challenge = challenges.first { $0.skillID == skill.id && $0.rank == next }
             // A rank with no challenge configured yet cannot be reached, so a

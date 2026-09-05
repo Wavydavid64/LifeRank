@@ -14,6 +14,10 @@ final class ActivityRecord {
     var notes: String?
     /// Stable id of the source workout, used to reject double imports (§21).
     var externalIdentifier: String?
+    /// Optional, so adding them stayed a lightweight migration under
+    /// `LifeRankSchemaV1` — no stage needed.
+    var activeCalories: Double?
+    var averageHeartRate: Double?
 
     init(_ activity: Activity) {
         self.id = activity.id
@@ -24,6 +28,8 @@ final class ActivityRecord {
         self.distanceMiles = activity.distanceMiles
         self.notes = activity.notes
         self.externalIdentifier = activity.externalIdentifier
+        self.activeCalories = activity.activeCalories
+        self.averageHeartRate = activity.averageHeartRate
     }
 
     var domain: Activity {
@@ -35,7 +41,9 @@ final class ActivityRecord {
             durationMinutes: durationMinutes,
             distanceMiles: distanceMiles,
             notes: notes,
-            externalIdentifier: externalIdentifier
+            externalIdentifier: externalIdentifier,
+            activeCalories: activeCalories,
+            averageHeartRate: averageHeartRate
         )
     }
 }

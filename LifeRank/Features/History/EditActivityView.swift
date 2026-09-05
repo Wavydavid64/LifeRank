@@ -43,7 +43,11 @@ struct EditActivityView: View {
             durationMinutes: minutes,
             distanceMiles: miles,
             notes: notes.isEmpty ? nil : notes,
-            externalIdentifier: activity.externalIdentifier
+            externalIdentifier: activity.externalIdentifier,
+            // Carried through untouched — these came from Health and are not
+            // the user's to correct.
+            activeCalories: activity.activeCalories,
+            averageHeartRate: activity.averageHeartRate
         )
     }
 

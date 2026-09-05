@@ -11,7 +11,10 @@ nonisolated enum WorkoutMapping {
         .cycling: "cycling",
         .hiking: "hiking",
         .paddleSports: "kayaking",
+        // Hevy reports traditional; Apple Watch and several other apps report
+        // functional for the same activity (§20).
         .traditionalStrengthTraining: "strength-training",
+        .functionalStrengthTraining: "strength-training",
         .yoga: "yoga",
         .flexibility: "stretching",
     ]

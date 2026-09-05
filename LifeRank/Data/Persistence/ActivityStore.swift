@@ -66,6 +66,8 @@ struct ActivityStore {
         record.durationMinutes = activity.durationMinutes
         record.distanceMiles = activity.distanceMiles
         record.notes = activity.notes
+        record.activeCalories = activity.activeCalories
+        record.averageHeartRate = activity.averageHeartRate
 
         try recalculateXP()
     }
