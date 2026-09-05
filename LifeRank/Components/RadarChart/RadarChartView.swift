@@ -15,15 +15,20 @@ struct RadarChartView: View {
     private let axes = Attribute.allCases
     private let ringCount = 4
 
-    /// Canvas cannot tween a dictionary, so the polygon is drawn between the
-    /// previous and current values with a single animated scalar across them.
+    /// Canvas cannot tween a dictionary, so during a change the polygon is drawn
+    /// between the old and new values with a single animated scalar across them.
     @State private var previous: [Attribute: Double] = [:]
-    @State private var target: [Attribute: Double] = [:]
     @State private var blend: Double = 1
 
+    /// At rest this reads `values` directly. An earlier version kept a seeded
+    /// copy and drew from that instead, which rendered an empty chart whenever
+    /// the seeding did not land — the displayed data must not depend on a
+    /// lifecycle callback having run.
     private func displayed(_ attribute: Attribute) -> Double {
+        let end = values[attribute] ?? 0
+        guard blend < 1 else { return end }
+
         let start = previous[attribute] ?? 0
-        let end = target[attribute] ?? 0
         return start + (end - start) * blend
     }
 
@@ -37,14 +42,18 @@ struct RadarChartView: View {
     var body: some View {
         Canvas { context, size in
             let center = CGPoint(x: size.width / 2, y: size.height / 2)
-            let radius = min(size.width, size.height) / 2 * 0.70
+            // Leaves room for the two-line labels outside the outer ring.
+            let radius = min(size.width, size.height) / 2 * 0.66
             let grid = Color.secondary.opacity(0.25)
 
             for ring in 1...ringCount {
+                // The outermost ring is the rank's ceiling — the thing being
+                // aimed at — so it is drawn as a target rather than as grid.
+                let isCeiling = ring == ringCount
                 context.stroke(
                     polygon(center: center, radius: radius * Double(ring) / Double(ringCount)),
-                    with: .color(grid),
-                    lineWidth: 1
+                    with: .color(isCeiling ? Color.secondary.opacity(0.55) : grid),
+                    lineWidth: isCeiling ? 1.5 : 1
                 )
             }
 
@@ -62,24 +71,37 @@ struct RadarChartView: View {
                 index == 0 ? build.move(to: vertex) : build.addLine(to: vertex)
             }
             build.closeSubpath()
-            context.fill(build, with: .color(tint.opacity(0.30)))
-            context.stroke(build, with: .color(tint), lineWidth: 2)
+            context.fill(
+                build,
+                with: .radialGradient(
+                    Gradient(colors: [tint.opacity(0.45), tint.opacity(0.12)]),
+                    center: center,
+                    startRadius: 0,
+                    endRadius: radius
+                )
+            )
+            context.stroke(build, with: .color(tint), lineWidth: 2.5)
 
+            // Name above the axis tip, level below it — DESIGN.md §6 wants the
+            // build readable as numbers, not only as a shape.
             for (index, attribute) in axes.enumerated() {
-                var label = context.resolve(Text(attribute.displayName).font(.caption2))
-                label.shading = .color(.secondary)
-                context.draw(label, at: point(center: center, radius: radius * 1.22, index: index))
+                let anchor = point(center: center, radius: radius * 1.24, index: index)
+
+                var name = context.resolve(Text(attribute.displayName).font(.caption2))
+                name.shading = .color(.secondary)
+                context.draw(name, at: CGPoint(x: anchor.x, y: anchor.y - 7))
+
+                var value = context.resolve(
+                    Text("\(Int(displayed(attribute)))")
+                        .font(.system(.caption2, design: .monospaced).weight(.bold))
+                )
+                value.shading = .color(tint)
+                context.draw(value, at: CGPoint(x: anchor.x, y: anchor.y + 7))
             }
         }
         .accessibilityLabel("Attribute radar chart")
-        .onAppear {
-            previous = values
-            target = values
-            blend = 1
-        }
-        .onChange(of: values) { _, newValues in
-            previous = Dictionary(uniqueKeysWithValues: axes.map { ($0, displayed($0)) })
-            target = newValues
+        .onChange(of: values) { oldValues, _ in
+            previous = oldValues
             blend = 0
             withAnimation(.smooth(duration: 0.5)) { blend = 1 }
         }

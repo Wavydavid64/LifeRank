@@ -10,15 +10,20 @@ struct ActivityStore {
     /// Saves an activity together with every XPEvent it produces, as one
     /// transaction. A failed save rolls back rather than leaving an activity
     /// with partial or missing XP (DESIGN.md §36).
-    func log(_ activity: Activity, skill: Skill) throws {
+    /// Returns the events it awarded, so the caller can show the player exactly
+    /// what the session earned without re-deriving it.
+    @discardableResult
+    func log(_ activity: Activity, skill: Skill) throws -> [XPEvent] {
         let prior = try activities().filter { $0.date <= activity.date }
+        let awarded = xpEvents(for: activity, skill: skill, prior: prior)
 
         context.insert(ActivityRecord(activity))
-        for event in xpEvents(for: activity, skill: skill, prior: prior) {
+        for event in awarded {
             context.insert(XPEventRecord(event))
         }
 
         try saveOrRollback()
+        return awarded
     }
 
     /// Removes an activity and every XPEvent it produced. Events are keyed by

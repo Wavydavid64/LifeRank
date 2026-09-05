@@ -9,7 +9,7 @@ struct LogActivityView: View {
     @State private var minutes: Double?
     @State private var notes = ""
     @State private var errorMessage: String?
-    @State private var lastAward: Int?
+    @State private var award: XPAward?
     @State private var isImporting = false
     @State private var importSummary: String?
 
@@ -64,13 +64,6 @@ struct LogActivityView: View {
                     }
                 }
 
-                if let lastAward {
-                    Section("Last entry") {
-                        Text("+\(lastAward) XP")
-                            .foregroundStyle(.secondary)
-                    }
-                }
-
                 Section {
                     Button("Import Workouts") { Task { await importFromHealth() } }
                         .disabled(isImporting)
@@ -85,6 +78,18 @@ struct LogActivityView: View {
                 }
             }
             .navigationTitle("Log Activity")
+            .overlay {
+                if let award {
+                    XPAwardView(award: award)
+                        .transition(.scale(scale: 0.94).combined(with: .opacity))
+                        .onTapGesture { dismissAward() }
+                }
+            }
+            .task(id: award) {
+                guard award != nil else { return }
+                try? await Task.sleep(for: .seconds(2.8))
+                dismissAward()
+            }
             .alert("Could not save", isPresented: .constant(errorMessage != nil)) {
                 Button("OK") { errorMessage = nil }
             } message: {
@@ -117,16 +122,21 @@ struct LogActivityView: View {
     }
 
     private func save() {
-        let activity = draftActivity
-        let award = pendingXP
+        let skill = selectedSkill
 
         do {
-            try ActivityStore(context: context).log(activity, skill: selectedSkill)
-            lastAward = award
+            let events = try ActivityStore(context: context).log(draftActivity, skill: skill)
+            withAnimation(.smooth(duration: 0.3)) {
+                award = XPAward(skillName: skill.name, events: events)
+            }
             minutes = nil
             notes = ""
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+
+    private func dismissAward() {
+        withAnimation(.smooth(duration: 0.25)) { award = nil }
     }
 }
