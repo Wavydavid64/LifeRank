@@ -36,6 +36,43 @@ domain layer without launching the app.
 
 ## Current state
 
-Stage 1 (domain foundation) per `DESIGN.md` §41. Built: `Rank`, `Attribute`,
-`Skill`, `Activity`, `XPEvent`, `ProgressionEngine`, `SeedData`, tests.
-No UI yet — `ContentView` is still the Xcode template.
+All ten `DESIGN.md` §41 stages are implemented. Tabs: Character, Skills, Log,
+Quests, History (§28) — Trials is reached from Character's Next Promotion row.
+
+```
+LifeRank/
+  Domain/       Models, Progression, Ranks, Skills, Quests, Trials — pure Swift
+  Data/         Persistence (SwiftData), Seed (balance config), Backup (JSON)
+  Integrations/ HealthKit behind ActivityProvider
+  Features/     One folder per screen
+  Components/   RadarChart, XPBar, RankBadge
+```
+
+### Things worth knowing before changing balance
+
+- Levels, skill ranks and quest progress are **derived** from the XP ledger.
+  Only overall rank, manual objective completions, and ignored-workout
+  tombstones are stored. Rebalancing is retroactive and needs no migration.
+- Several balance values are coupled, and tests enforce the couplings rather
+  than leaving them to be discovered later:
+  - `skillRequirementsFitInsideTheirRankXPBudget` — N skills at a rank must be
+    affordable within that rank's overall XP.
+  - `attributeRequirementsFitTheirRankXPBudget` — same for the attribute
+    clause. This is why `RankRequirements` departs from §15's attribute
+    minimums, which are unreachable against the level curve.
+  - `ceilingLeavesHeadroomAtEachRankThreshold` — radar ceilings vs. real levels.
+  Change `AttributeProgression.baseLevelCost` or any threshold and these fail
+  loudly instead of shipping an unreachable rank.
+- Quest bonus XP is keyed to the activity that crossed the target, so deleting
+  that activity reverses the bonus too.
+- `ActivityStore.recalculateXP()` rebuilds the ledger by chronological replay.
+  Run it after changing the XP formula.
+
+### Outstanding
+
+- **§20 is unverified.** The HealthKit import path has never seen a real
+  `HKWorkout` — it is tested only against synthetic `ImportedActivity` values.
+  On a device, check whether Garmin runs carry `distanceWalkingRunning`, and
+  whether Hevy reports `.traditionalStrengthTraining` or
+  `.functionalStrengthTraining` (the latter maps to nothing today).
+- Editing logged activities is not implemented; delete and re-log instead.

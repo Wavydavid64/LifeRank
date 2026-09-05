@@ -51,10 +51,8 @@ struct SkillDetailView: View {
     var body: some View {
         List {
             Section {
-                VStack(spacing: 6) {
-                    Text("\(rank.displayName)-RANK")
-                        .font(.title.weight(.bold))
-                        .monospaced()
+                VStack(spacing: 8) {
+                    RankBadge(rank: rank, isProminent: true)
                     Text("\(xp) XP")
                         .font(.callout)
                         .monospacedDigit()
@@ -67,17 +65,7 @@ struct SkillDetailView: View {
 
             if let nextRank = rank.next, let required = SkillRankRequirements.xpRequired(for: nextRank) {
                 Section("Next Rank") {
-                    VStack(alignment: .leading, spacing: 6) {
-                        ProgressView(value: Double(min(xp, required)), total: Double(required))
-                        HStack {
-                            Text("\(xp) / \(required)")
-                            Spacer()
-                            Text("\(nextRank.displayName)-Rank")
-                                .foregroundStyle(.secondary)
-                        }
-                        .font(.caption)
-                        .monospacedDigit()
-                    }
+                    XPBar(current: xp, total: required, caption: "\(nextRank.displayName)-Rank")
 
                     if let challenge = nextChallenge {
                         challengeRow(challenge)
@@ -107,6 +95,7 @@ struct SkillDetailView: View {
         }
         .navigationTitle(skill.name)
         .navigationBarTitleDisplayMode(.inline)
+        .sensoryFeedback(.impact(weight: .light), trigger: manualCompletions)
         .alert("Could not save", isPresented: .constant(errorMessage != nil)) {
             Button("OK") { errorMessage = nil }
         } message: {

@@ -48,9 +48,7 @@ struct CharacterView: View {
             List {
                 Section {
                     VStack(spacing: 12) {
-                        Text("\(rank.displayName)-RANK")
-                            .font(.largeTitle.weight(.bold))
-                            .monospaced()
+                        RankBadge(rank: rank, isProminent: true)
 
                         RadarChartView(
                             values: radarValues,
@@ -119,17 +117,11 @@ struct CharacterView: View {
     @ViewBuilder
     private var overallProgress: some View {
         if let nextRank = rank.next, let required = RankRequirements.overallXP(for: nextRank) {
-            VStack(alignment: .leading, spacing: 6) {
-                ProgressView(value: Double(min(stats.totalXP, required)), total: Double(required))
-                HStack {
-                    Text("\(stats.totalXP) / \(required)")
-                    Spacer()
-                    Text("Next: \(nextRank.displayName)-Rank")
-                        .foregroundStyle(.secondary)
-                }
-                .font(.caption)
-                .monospacedDigit()
-            }
+            XPBar(
+                current: stats.totalXP,
+                total: required,
+                caption: "Next: \(nextRank.displayName)-Rank"
+            )
         } else {
             LabeledContent("Total XP", value: "\(stats.totalXP)")
         }
@@ -147,6 +139,7 @@ struct CharacterView: View {
                     .foregroundStyle(.secondary)
             }
             ProgressView(value: progress.fraction)
+                .animation(.smooth(duration: 0.4), value: progress.fraction)
         }
     }
 }

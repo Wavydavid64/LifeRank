@@ -13,11 +13,23 @@ struct RadarChartView: View {
     private let axes = Attribute.allCases
     private let ringCount = 4
 
+    /// Canvas cannot tween a dictionary, so the polygon is drawn between the
+    /// previous and current values with a single animated scalar across them.
+    @State private var previous: [Attribute: Double] = [:]
+    @State private var target: [Attribute: Double] = [:]
+    @State private var blend: Double = 1
+
+    private func displayed(_ attribute: Attribute) -> Double {
+        let start = previous[attribute] ?? 0
+        let end = target[attribute] ?? 0
+        return start + (end - start) * blend
+    }
+
     /// Normally the rank's ceiling, so growth is visible. Outgrowing your rank
     /// pushes the ring out to the strongest attribute instead of clipping the
     /// polygon outside the chart.
     private var scale: Double {
-        max(ceiling, values.values.max() ?? 0)
+        max(ceiling, axes.map(displayed).max() ?? 0)
     }
 
     var body: some View {
@@ -43,7 +55,7 @@ struct RadarChartView: View {
 
             var build = Path()
             for (index, attribute) in axes.enumerated() {
-                let fraction = (values[attribute] ?? 0) / scale
+                let fraction = displayed(attribute) / scale
                 let vertex = point(center: center, radius: radius * fraction, index: index)
                 index == 0 ? build.move(to: vertex) : build.addLine(to: vertex)
             }
@@ -58,6 +70,17 @@ struct RadarChartView: View {
             }
         }
         .accessibilityLabel("Attribute radar chart")
+        .onAppear {
+            previous = values
+            target = values
+            blend = 1
+        }
+        .onChange(of: values) { _, newValues in
+            previous = Dictionary(uniqueKeysWithValues: axes.map { ($0, displayed($0)) })
+            target = newValues
+            blend = 0
+            withAnimation(.smooth(duration: 0.5)) { blend = 1 }
+        }
     }
 
     private func point(center: CGPoint, radius: Double, index: Int) -> CGPoint {

@@ -49,10 +49,7 @@ struct SkillsView: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            Text((ranks[skill.id] ?? .starting).displayName)
-                .font(.headline.weight(.bold))
-                .monospaced()
-                .foregroundStyle(.secondary)
+            RankBadge(rank: ranks[skill.id] ?? .starting)
         }
     }
 }

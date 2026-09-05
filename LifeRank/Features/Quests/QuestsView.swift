@@ -42,6 +42,7 @@ struct QuestsView: View {
                 }
             }
             ProgressView(value: progress.fraction)
+                .animation(.smooth(duration: 0.4), value: progress.fraction)
             HStack {
                 Text(label(for: progress, metric: quest.objective.metric))
                 if quest.bonusXP > 0 {

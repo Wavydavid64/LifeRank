@@ -13,6 +13,7 @@ struct TrialsView: View {
     @Query private var completions: [ObjectiveCompletionRecord]
 
     @State private var errorMessage: String?
+    @State private var promotedTo: Rank?
 
     private var rank: Rank { characters.first?.rank ?? .starting }
     private var activities: [Activity] { activityRecords.map(\.domain) }
@@ -75,6 +76,11 @@ struct TrialsView: View {
                 }
             }
             .navigationTitle("\(rank.displayName)-Rank")
+            .sheet(item: $promotedTo) { rank in
+                PromotionView(rank: rank) { promotedTo = nil }
+                    .interactiveDismissDisabled()
+            }
+            .sensoryFeedback(.impact(weight: .light), trigger: manualCompletions)
             .alert("Could not save", isPresented: .constant(errorMessage != nil)) {
                 Button("OK") { errorMessage = nil }
             } message: {
@@ -134,8 +140,11 @@ struct TrialsView: View {
     }
 
     private func promote() {
+        let target = status.nextRank
         do {
-            try CharacterStore(context: context).promote(using: status)
+            if try CharacterStore(context: context).promote(using: status) {
+                promotedTo = target
+            }
         } catch {
             errorMessage = error.localizedDescription
         }
