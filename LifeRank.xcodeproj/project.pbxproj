@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		25779AE3D98F7185F8681405 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CB44B28EDCA175EA3BF62D /* Foundation.framework */; };
+		3E8D49B4AF023907051E36D5 /* ImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0743B2C0A29D2162152C102A /* ImportTests.swift */; };
 		7668A2613DE44AE156E6324E /* ProgressionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3646A7DD0EFD6A1672AC5A /* ProgressionEngineTests.swift */; };
 		84910BBCF870612C730E6A01 /* ActivityStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ACFEEB6B5618952E2448DD /* ActivityStoreTests.swift */; };
 		850DC7A12F68C5415CF99E25 /* SkillRankRequirementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8DC5DC1315F13BF6D2BEE /* SkillRankRequirementsTests.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0743B2C0A29D2162152C102A /* ImportTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImportTests.swift; sourceTree = "<group>"; };
 		189D93018E000846FA8A5C02 /* LifeRankTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeRankTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28FD30EECD384606CAA3B2F7 /* AttributeProgressionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AttributeProgressionTests.swift; sourceTree = "<group>"; };
 		5F3646A7DD0EFD6A1672AC5A /* ProgressionEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProgressionEngineTests.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				28FD30EECD384606CAA3B2F7 /* AttributeProgressionTests.swift */,
 				FB94A5E7779A3EEAE8EBE329 /* RankRequirementsTests.swift */,
 				F7B8DC5DC1315F13BF6D2BEE /* SkillRankRequirementsTests.swift */,
+				0743B2C0A29D2162152C102A /* ImportTests.swift */,
 			);
 			path = LifeRankTests;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				DC7A6BA31C22C90D51CF4ACD /* AttributeProgressionTests.swift in Sources */,
 				C2BC4A90CEFAE358961915C6 /* RankRequirementsTests.swift in Sources */,
 				850DC7A12F68C5415CF99E25 /* SkillRankRequirementsTests.swift in Sources */,
+				3E8D49B4AF023907051E36D5 /* ImportTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +402,7 @@
 				DEVELOPMENT_TEAM = B24W8RA8N9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "LifeRank reads your workouts from Apple Health to award XP for training you have already done.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -431,6 +436,7 @@
 				DEVELOPMENT_TEAM = B24W8RA8N9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "LifeRank reads your workouts from Apple Health to award XP for training you have already done.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

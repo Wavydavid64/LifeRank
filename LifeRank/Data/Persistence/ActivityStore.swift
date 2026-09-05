@@ -24,6 +24,17 @@ struct ActivityStore {
         }
     }
 
+    /// Whether a workout with this source identifier has already been imported.
+    /// Guarding on this is what stops one HealthKit workout awarding XP twice,
+    /// which DESIGN.md §21 treats as a correctness requirement.
+    func hasImported(externalIdentifier: String) throws -> Bool {
+        var descriptor = FetchDescriptor<ActivityRecord>(
+            predicate: #Predicate { $0.externalIdentifier == externalIdentifier }
+        )
+        descriptor.fetchLimit = 1
+        return try !context.fetch(descriptor).isEmpty
+    }
+
     func xpEvents() throws -> [XPEvent] {
         try context.fetch(FetchDescriptor<XPEventRecord>()).map(\.domain)
     }
