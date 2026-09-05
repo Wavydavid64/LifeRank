@@ -2,12 +2,10 @@ import SwiftUI
 
 /// Raw HealthKit workout dump, for answering DESIGN.md §20 on a real device.
 ///
-/// TEMPORARY diagnostic. Awards no XP, persists nothing, and does not touch the
-/// progression engine. Delete along with `WorkoutDiagnostic` and
-/// `HealthKitService.fetchDiagnostics` once the mappings and XP formula are
-/// settled against real data.
+/// ARCHIVED — not part of the app target. See README.md in this folder.
+/// Awards no XP, persists nothing, does not touch the progression engine.
 struct HealthKitDiagnosticView: View {
-    private let health = HealthKitService()
+    private let health = HealthKitDiagnosticService()
 
     @State private var workouts: [WorkoutDiagnostic] = []
     @State private var errorText: String?

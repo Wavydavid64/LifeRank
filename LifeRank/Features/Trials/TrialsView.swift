@@ -96,7 +96,7 @@ struct TrialsView: View {
             Text(title)
             Spacer()
             Text("\(progress.current) / \(progress.required)")
-                .monospacedDigit()
+                .font(.system(.body, design: .monospaced))
                 .foregroundStyle(.secondary)
         }
     }
@@ -124,9 +124,7 @@ struct TrialsView: View {
             Text(objective.title)
             Spacer()
             if objective.isManual {
-                Text("Manual")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+                Text("Manual").statLabel()
             }
         }
     }

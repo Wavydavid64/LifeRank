@@ -63,8 +63,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		630C00B7304BB7FB001A8B8C /* LifeRank */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = LifeRank;
 			sourceTree = "<group>";
 		};

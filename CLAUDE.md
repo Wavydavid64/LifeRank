@@ -99,15 +99,32 @@ asks for, since progression must run anywhere, not only on the main actor.
   change, optional → non-optional): add V2 and a `MigrationStage`, or the store
   fails to open and takes real progression with it.
 
+### §20 findings (verified on device)
+
+- Garmin running arrives as `.running` with distance under
+  `distanceWalkingRunning`. Running XP works fully.
+- Hevy arrives as `.traditionalStrengthTraining` with duration and **no
+  distance**, so strength XP is duration-only — an hour of hard lifting and an
+  hour of resting between sets currently score the same.
+- Both sources provide active energy. Heart rate is read alongside it.
+- `activeCalories` and `averageHeartRate` are captured and stored but **not
+  used** by the XP formula (§11: tune against real usage). They are recorded
+  now so a future intensity term applies to history rather than only to
+  sessions logged after it ships.
+- Still unverified: the `.cycling`, `.paddleSports`, `.yoga` and `.flexibility`
+  mappings. The diagnostic screen answers these — see below.
+
 ### Outstanding
 
-- **§20 is unverified.** The HealthKit import path has never seen a real
-  `HKWorkout` — it is tested only against synthetic `ImportedActivity` values.
-  On a device, check whether Garmin runs carry `distanceWalkingRunning`, and
-  whether Hevy reports `.traditionalStrengthTraining` or
-  `.functionalStrengthTraining` (the latter maps to nothing today). The
-  `.cycling`, `.paddleSports`, `.yoga` and `.flexibility` mappings are equally
-  unverified.
-- Balance numbers are estimates, not measurements. They want tuning against
-  real logged data; everything derives from the ledger, so retuning is
-  retroactive and free.
+- **The view layer is untested.** Tests cover the domain and persistence
+  through in-memory containers, but no test exercises a SwiftUI view. A radar
+  bug survived several stages because of this: the chart drew from state seeded
+  in `onAppear`, rendered empty against real data, and was twice mistaken for
+  an empty-state. Screens whose interactive paths have never been run at all:
+  the XP award overlay, activity editing, promotion, and backup export/restore.
+- Balance numbers are estimates, not measurements — including the per-skill
+  `effortMultiplier` values, which encode assumptions about session length and
+  frequency. Everything derives from the ledger, so retuning is retroactive.
+- `Features/Diagnostics/` and `WorkoutDiagnostic` are marked TEMPORARY. Delete
+  them, and collapse `diagnosticReadTypes` back into `readTypes`, once the
+  remaining workout-type mappings are confirmed.

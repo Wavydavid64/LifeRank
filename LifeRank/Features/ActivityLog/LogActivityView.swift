@@ -67,11 +67,6 @@ struct LogActivityView: View {
                 Section {
                     Button("Import Workouts") { Task { await importFromHealth() } }
                         .disabled(isImporting)
-
-                    // TEMPORARY — §20 verification. Remove with the diagnostic.
-                    NavigationLink("HealthKit Diagnostic") {
-                        HealthKitDiagnosticView()
-                    }
                 } header: {
                     Text("Apple Health")
                 } footer: {

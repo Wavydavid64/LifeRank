@@ -39,17 +39,35 @@ struct SkillsView: View {
 
     private func row(for skill: Skill) -> some View {
         let xp = stats.skillXP[skill.id] ?? 0
+        let rank = ranks[skill.id] ?? .starting
 
-        return HStack {
-            VStack(alignment: .leading, spacing: 2) {
+        return HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 3) {
                 Text(skill.name)
-                Text("\(xp) XP")
-                    .font(.caption)
-                    .monospacedDigit()
-                    .foregroundStyle(.secondary)
+                Text(subtitle(xp: xp, rank: rank, skillID: skill.id))
+                    .statLabel()
             }
             Spacer()
-            RankBadge(rank: ranks[skill.id] ?? .starting)
+            RankBadge(rank: rank, progress: progress(xp: xp, rank: rank, skillID: skill.id))
         }
+    }
+
+    /// Fraction of the way to the next rank, which the badge draws as its own
+    /// border. Nil at the top of the ladder, where there is nothing to fill.
+    private func progress(xp: Int, rank: Rank, skillID: Skill.ID) -> Double? {
+        guard let next = rank.next,
+              let required = SkillRankRequirements.xpRequired(for: next, skillID: skillID),
+              required > 0
+        else { return nil }
+
+        return min(Double(xp) / Double(required), 1)
+    }
+
+    private func subtitle(xp: Int, rank: Rank, skillID: Skill.ID) -> String {
+        guard let next = rank.next,
+              let required = SkillRankRequirements.xpRequired(for: next, skillID: skillID)
+        else { return "\(xp) XP" }
+
+        return "\(xp) / \(required) XP"
     }
 }

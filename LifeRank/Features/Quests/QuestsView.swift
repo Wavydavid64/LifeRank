@@ -50,8 +50,7 @@ struct QuestsView: View {
                     Text("+\(quest.bonusXP) XP")
                 }
             }
-            .font(.caption)
-            .monospacedDigit()
+            .font(.system(.caption, design: .monospaced))
             .foregroundStyle(.secondary)
         }
     }

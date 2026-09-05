@@ -117,12 +117,10 @@ struct HistoryView: View {
                 Text(activity.name)
                 Spacer()
                 Text("+\(xpByActivity[activity.id] ?? 0) XP")
-                    .monospacedDigit()
+                    .font(.system(.body, design: .monospaced))
                     .foregroundStyle(.secondary)
             }
-            Text(subtitle(activity))
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            Text(subtitle(activity)).statLabel()
         }
     }
 

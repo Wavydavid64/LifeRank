@@ -54,8 +54,7 @@ struct SkillDetailView: View {
                 VStack(spacing: 8) {
                     RankBadge(rank: rank, isProminent: true)
                     Text("\(xp) XP")
-                        .font(.callout)
-                        .monospacedDigit()
+                        .statValue(size: 15)
                         .foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity)
@@ -80,18 +79,24 @@ struct SkillDetailView: View {
                     activities: allActivities.map(\.domain),
                     now: .now
                 )
-                LabeledContent(
-                    "Days practiced",
-                    value: rate.formatted(.percent.precision(.fractionLength(0)))
-                )
+                HStack {
+                    Text("Days practiced")
+                    Spacer()
+                    Text(rate.formatted(.percent.precision(.fractionLength(0))))
+                        .font(.system(.body, design: .monospaced))
+                        .foregroundStyle(.secondary)
+                }
             }
 
             Section("Contributes To") {
                 ForEach(skill.attributeWeights, id: \.attribute) { weight in
-                    LabeledContent(
-                        weight.attribute.displayName,
-                        value: weight.weight.formatted(.percent.precision(.fractionLength(0)))
-                    )
+                    HStack {
+                        Text(weight.attribute.displayName)
+                        Spacer()
+                        Text(weight.weight.formatted(.percent.precision(.fractionLength(0))))
+                            .font(.system(.body, design: .monospaced))
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
 
@@ -130,7 +135,7 @@ struct SkillDetailView: View {
             Image(systemName: isComplete ? "checkmark.circle.fill" : "circle")
                 .foregroundStyle(isComplete ? AnyShapeStyle(.tint) : AnyShapeStyle(.secondary))
             VStack(alignment: .leading, spacing: 2) {
-                Text("Challenge").font(.caption).foregroundStyle(.secondary)
+                Text("Challenge").statLabel()
                 Text(challenge.objective.title)
             }
         }
@@ -160,7 +165,7 @@ struct SkillDetailView: View {
             Text(activity.date.formatted(date: .abbreviated, time: .omitted))
             Spacer()
             Text(summary(of: activity))
-                .monospacedDigit()
+                .font(.system(.callout, design: .monospaced))
                 .foregroundStyle(.secondary)
         }
         .font(.callout)

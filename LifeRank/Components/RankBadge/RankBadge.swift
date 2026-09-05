@@ -39,6 +39,18 @@ private extension Color {
 struct RankBadge: View {
     let rank: Rank
     var isProminent = false
+    /// Progress toward the next rank, 0...1. When supplied, the border itself
+    /// fills as the rank is approached — the badge doubles as its own gauge
+    /// rather than needing a second bar beside it.
+    var progress: Double?
+
+    private var corner: CGFloat { isProminent ? 14 : 6 }
+    private var lineWidth: CGFloat { isProminent ? 3 : 1.5 }
+
+    private var outline: some Shape {
+        RoundedRectangle(cornerRadius: corner, style: .continuous)
+            .inset(by: lineWidth / 2)
+    }
 
     var body: some View {
         Text(rank.displayName)
@@ -46,10 +58,20 @@ struct RankBadge: View {
             .foregroundStyle(rank.color)
             .padding(.horizontal, isProminent ? 22 : 9)
             .padding(.vertical, isProminent ? 8 : 3)
-            .overlay(
-                RoundedRectangle(cornerRadius: isProminent ? 14 : 6, style: .continuous)
-                    .strokeBorder(rank.color, lineWidth: isProminent ? 3 : 1.5)
-            )
+            .overlay {
+                ZStack {
+                    outline.stroke(
+                        rank.color.opacity(progress == nil ? 1 : 0.25),
+                        lineWidth: lineWidth
+                    )
+                    if let progress {
+                        outline
+                            .trim(from: 0, to: max(0, min(progress, 1)))
+                            .stroke(rank.color, lineWidth: lineWidth)
+                            .animation(.smooth(duration: 0.4), value: progress)
+                    }
+                }
+            }
             .accessibilityLabel("\(rank.displayName) rank")
     }
 }
