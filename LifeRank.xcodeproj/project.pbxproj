@@ -6,19 +6,49 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		25779AE3D98F7185F8681405 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CB44B28EDCA175EA3BF62D /* Foundation.framework */; };
+		7668A2613DE44AE156E6324E /* ProgressionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3646A7DD0EFD6A1672AC5A /* ProgressionEngineTests.swift */; };
+		A4F13C93DC0F1CABC2A1565D /* SeedDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AE90B303A25775B8AECF1 /* SeedDataTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AE334620738A1333AC49E52D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 630C00AD304BB7FB001A8B8C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 630C00B4304BB7FB001A8B8C;
+			remoteInfo = LifeRank;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		189D93018E000846FA8A5C02 /* LifeRankTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeRankTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F3646A7DD0EFD6A1672AC5A /* ProgressionEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProgressionEngineTests.swift; sourceTree = "<group>"; };
 		630C00B5304BB7FB001A8B8C /* LifeRank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeRank.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C16AE90B303A25775B8AECF1 /* SeedDataTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SeedDataTests.swift; sourceTree = "<group>"; };
+		D3CB44B28EDCA175EA3BF62D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		630C00B7304BB7FB001A8B8C /* LifeRank */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = LifeRank;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		46FD06050FC3436759BFC992 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25779AE3D98F7185F8681405 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		630C00B2304BB7FB001A8B8C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -29,11 +59,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		103BC88F14B0C3B303517C95 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A589F8217A8BCC84894FB4F /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		630C00AC304BB7FB001A8B8C = {
 			isa = PBXGroup;
 			children = (
 				630C00B7304BB7FB001A8B8C /* LifeRank */,
 				630C00B6304BB7FB001A8B8C /* Products */,
+				103BC88F14B0C3B303517C95 /* Frameworks */,
+				AFC967C493A614AB555455DD /* LifeRankTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -41,8 +81,26 @@
 			isa = PBXGroup;
 			children = (
 				630C00B5304BB7FB001A8B8C /* LifeRank.app */,
+				189D93018E000846FA8A5C02 /* LifeRankTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8A589F8217A8BCC84894FB4F /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				D3CB44B28EDCA175EA3BF62D /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		AFC967C493A614AB555455DD /* LifeRankTests */ = {
+			isa = PBXGroup;
+			children = (
+				5F3646A7DD0EFD6A1672AC5A /* ProgressionEngineTests.swift */,
+				C16AE90B303A25775B8AECF1 /* SeedDataTests.swift */,
+			);
+			path = LifeRankTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -64,11 +122,27 @@
 				630C00B7304BB7FB001A8B8C /* LifeRank */,
 			);
 			name = LifeRank;
-			packageProductDependencies = (
-			);
 			productName = LifeRank;
 			productReference = 630C00B5304BB7FB001A8B8C /* LifeRank.app */;
 			productType = "com.apple.product-type.application";
+		};
+		A56BBBF69A7AC10A7B4CBFD9 /* LifeRankTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5380D2EAFD7116B2D9D79405 /* Build configuration list for PBXNativeTarget "LifeRankTests" */;
+			buildPhases = (
+				333AF989633A9B535B111637 /* Sources */,
+				46FD06050FC3436759BFC992 /* Frameworks */,
+				60915DA5A3FF86EE3AB0C7FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				682214226022D8F63763C1FD /* PBXTargetDependency */,
+			);
+			name = LifeRankTests;
+			productName = LifeRankTests;
+			productReference = 189D93018E000846FA8A5C02 /* LifeRankTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -100,11 +174,19 @@
 			projectRoot = "";
 			targets = (
 				630C00B4304BB7FB001A8B8C /* LifeRank */,
+				A56BBBF69A7AC10A7B4CBFD9 /* LifeRankTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		60915DA5A3FF86EE3AB0C7FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		630C00B3304BB7FB001A8B8C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +197,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		333AF989633A9B535B111637 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7668A2613DE44AE156E6324E /* ProgressionEngineTests.swift in Sources */,
+				A4F13C93DC0F1CABC2A1565D /* SeedDataTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		630C00B1304BB7FB001A8B8C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +215,39 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		682214226022D8F63763C1FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LifeRank;
+			target = 630C00B4304BB7FB001A8B8C /* LifeRank */;
+			targetProxy = AE334620738A1333AC49E52D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		1478A691EA8E70730390D7F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Wavydavid.LifeRankTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LifeRank.app/LifeRank";
+			};
+			name = Debug;
+		};
 		630C00BE304BB7FE001A8B8C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -249,8 +372,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LifeRank/LifeRank.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B24W8RA8N9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -280,8 +405,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LifeRank/LifeRank.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B24W8RA8N9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -306,9 +433,42 @@
 			};
 			name = Release;
 		};
+		F3F0D416FEE2910434CC0D43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Wavydavid.LifeRankTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LifeRank.app/LifeRank";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5380D2EAFD7116B2D9D79405 /* Build configuration list for PBXNativeTarget "LifeRankTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F3F0D416FEE2910434CC0D43 /* Release */,
+				1478A691EA8E70730390D7F9 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		630C00B0304BB7FB001A8B8C /* Build configuration list for PBXProject "LifeRank" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
