@@ -52,7 +52,8 @@ struct CharacterView: View {
 
                         RadarChartView(
                             values: radarValues,
-                            ceiling: Double(RankRequirements.attributeCeiling(for: rank))
+                            ceiling: Double(RankRequirements.attributeCeiling(for: rank)),
+                            tint: rank.color
                         )
                             .aspectRatio(1, contentMode: .fit)
                     }

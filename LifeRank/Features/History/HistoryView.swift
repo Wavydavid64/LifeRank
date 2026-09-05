@@ -16,6 +16,7 @@ struct HistoryView: View {
     @State private var isImporting = false
     @State private var pendingRestore: URL?
     @State private var statusMessage: String?
+    @State private var editing: Activity?
 
     /// XP awarded per activity, counting skill XP only — attribute XP is the
     /// same XP redistributed, so adding both would double the figure.
@@ -43,7 +44,12 @@ struct HistoryView: View {
                 ForEach(days, id: \.date) { day in
                     Section(day.date.formatted(date: .abbreviated, time: .omitted)) {
                         ForEach(day.activities, id: \.id) { activity in
-                            row(activity)
+                            if activity.externalIdentifier == nil {
+                                Button { editing = activity.domain } label: { row(activity) }
+                                    .buttonStyle(.plain)
+                            } else {
+                                row(activity)
+                            }
                         }
                         .onDelete { offsets in
                             delete(offsets.map { day.activities[$0] })
@@ -70,6 +76,9 @@ struct HistoryView: View {
                 }
             }
             .navigationTitle("History")
+            .sheet(item: $editing) { activity in
+                EditActivityView(activity: activity)
+            }
             .fileExporter(
                 isPresented: $isExporting,
                 document: exportFile,

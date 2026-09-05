@@ -10,16 +10,12 @@ import SwiftData
 
 @main
 struct LifeRankApp: App {
+    private let container = ModelContainer.lifeRank()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [
-            ActivityRecord.self,
-            XPEventRecord.self,
-            CharacterRecord.self,
-            ObjectiveCompletionRecord.self,
-            IgnoredWorkoutRecord.self,
-        ])
+        .modelContainer(container)
     }
 }

@@ -44,11 +44,38 @@ struct ActivityStore {
         try saveOrRollback()
     }
 
+    /// Applies corrections to a logged activity and rebuilds the ledger.
+    ///
+    /// A full replay rather than a local patch: changing a duration can change
+    /// whether a quest was crossed, and that shifts which *later* activity earns
+    /// the bonus. Recomputing only this activity's events would leave the rest
+    /// of the ledger describing a history that no longer happened (§26).
+    func update(_ activity: Activity) throws {
+        guard let record = try context.fetch(FetchDescriptor<ActivityRecord>())
+            .first(where: { $0.id == activity.id })
+        else { return }
+
+        record.skillID = activity.skillID
+        record.name = activity.name
+        record.date = activity.date
+        record.durationMinutes = activity.durationMinutes
+        record.distanceMiles = activity.distanceMiles
+        record.notes = activity.notes
+
+        try recalculateXP()
+    }
+
     /// Rebuilds the whole XP ledger from the activities that remain.
     ///
     /// Replays chronologically rather than patching in place, because quest
     /// bonuses depend on what came before — the same reason a partial fixup
     /// would drift. Balance changes to the XP formula are picked up here (§26).
+    ///
+    /// ponytail: O(n²) — every replayed activity re-evaluates quest progress
+    /// over everything before it. At one activity a day that is ~50M operations
+    /// after a decade, or a second or two on a button the user pressed. If it
+    /// ever drags, carry a running per-quest tally through the loop instead of
+    /// refiltering the prefix.
     func recalculateXP() throws {
         let ordered = try activities().sorted { $0.date < $1.date }
 

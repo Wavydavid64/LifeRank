@@ -112,7 +112,7 @@ struct LogActivityView: View {
     private func describe(_ summary: ActivityImporter.Summary) -> String {
         var parts = ["Imported \(summary.imported)"]
         if summary.duplicates > 0 { parts.append("\(summary.duplicates) already imported") }
-        if summary.unclassified > 0 { parts.append("\(summary.unclassified) unrecognised") }
+        if summary.unclassified > 0 { parts.append("\(summary.unclassified) unrecognized") }
         return parts.joined(separator: ", ") + "."
     }
 

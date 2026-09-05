@@ -73,6 +73,18 @@ struct SkillDetailView: View {
                 }
             }
 
+            Section("Last 30 Days") {
+                let rate = ConsistencyStats.rate(
+                    skillID: skill.id,
+                    activities: allActivities.map(\.domain),
+                    now: .now
+                )
+                LabeledContent(
+                    "Days practiced",
+                    value: rate.formatted(.percent.precision(.fractionLength(0)))
+                )
+            }
+
             Section("Contributes To") {
                 ForEach(skill.attributeWeights, id: \.attribute) { weight in
                     LabeledContent(

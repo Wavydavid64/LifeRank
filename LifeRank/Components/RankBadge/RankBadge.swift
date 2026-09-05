@@ -2,10 +2,10 @@ import SwiftUI
 import UIKit
 
 extension Rank {
-    /// One colour per rank, climbing a familiar cool-to-hot ramp so a glance at
+    /// One color per rank, climbing a familiar cool-to-hot ramp so a glance at
     /// the badge reads as progress before the letter is even parsed.
     ///
-    /// All system colours, so both appearances are handled for free. Presentation
+    /// All system colors, so both appearances are handled for free. Presentation
     /// only — it lives here rather than on the model, because the domain layer
     /// must not import SwiftUI (DESIGN.md §32).
     var color: Color {
@@ -35,7 +35,7 @@ private extension Color {
 /// The rank letter, styled consistently wherever it appears. Strong monospaced
 /// type in a bordered frame — prominent without decoration (DESIGN.md §37).
 ///
-/// Colour is never the only cue: the letter is always shown alongside it.
+/// Color is never the only cue: the letter is always shown alongside it.
 struct RankBadge: View {
     let rank: Rank
     var isProminent = false

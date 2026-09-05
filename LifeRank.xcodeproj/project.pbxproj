@@ -17,11 +17,13 @@
 		84910BBCF870612C730E6A01 /* ActivityStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ACFEEB6B5618952E2448DD /* ActivityStoreTests.swift */; };
 		850DC7A12F68C5415CF99E25 /* SkillRankRequirementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8DC5DC1315F13BF6D2BEE /* SkillRankRequirementsTests.swift */; };
 		A4F13C93DC0F1CABC2A1565D /* SeedDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AE90B303A25775B8AECF1 /* SeedDataTests.swift */; };
+		B0CF5F1E0C40CC3BDBD4A053 /* ConsistencyStatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F02CCFF344F85E1AB882F3E /* ConsistencyStatsTests.swift */; };
 		C2BC4A90CEFAE358961915C6 /* RankRequirementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB94A5E7779A3EEAE8EBE329 /* RankRequirementsTests.swift */; };
 		C5B2C25F5A1D90C5333AE349 /* HistoryCorrectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F92E5646650EBBC01F99E7 /* HistoryCorrectionTests.swift */; };
 		DC7A6BA31C22C90D51CF4ACD /* AttributeProgressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FD30EECD384606CAA3B2F7 /* AttributeProgressionTests.swift */; };
 		F9BCFF3719BF226C0E09CC75 /* CharacterStatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2ACD34841CE35E923404B1 /* CharacterStatsTests.swift */; };
 		FEBF85AA26FD096C1D3A24BA /* QuestBonusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192EDD39767C7E7A19FCA985 /* QuestBonusTests.swift */; };
+		FFA9D21842CF6DC59EF1443E /* ActivityEditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515B2150493C304D2F7E712C /* ActivityEditTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,8 @@
 		28FD30EECD384606CAA3B2F7 /* AttributeProgressionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AttributeProgressionTests.swift; sourceTree = "<group>"; };
 		2CE89EA42CD84908881D63FE /* PromotionEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromotionEngineTests.swift; sourceTree = "<group>"; };
 		487E9A80783BEB3C8BE8DA7B /* QuestEvaluatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestEvaluatorTests.swift; sourceTree = "<group>"; };
+		4F02CCFF344F85E1AB882F3E /* ConsistencyStatsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsistencyStatsTests.swift; sourceTree = "<group>"; };
+		515B2150493C304D2F7E712C /* ActivityEditTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActivityEditTests.swift; sourceTree = "<group>"; };
 		5F3646A7DD0EFD6A1672AC5A /* ProgressionEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProgressionEngineTests.swift; sourceTree = "<group>"; };
 		630C00B5304BB7FB001A8B8C /* LifeRank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeRank.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D2ACD34841CE35E923404B1 /* CharacterStatsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CharacterStatsTests.swift; sourceTree = "<group>"; };
@@ -57,6 +61,8 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		630C00B7304BB7FB001A8B8C /* LifeRank */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = LifeRank;
 			sourceTree = "<group>";
 		};
@@ -133,6 +139,8 @@
 				961C35DC9F69BE1D506AC83D /* SkillProgressionTests.swift */,
 				12F92E5646650EBBC01F99E7 /* HistoryCorrectionTests.swift */,
 				DEDB12A657D85EC2407D45A4 /* BackupTests.swift */,
+				4F02CCFF344F85E1AB882F3E /* ConsistencyStatsTests.swift */,
+				515B2150493C304D2F7E712C /* ActivityEditTests.swift */,
 			);
 			path = LifeRankTests;
 			sourceTree = "<group>";
@@ -249,6 +257,8 @@
 				029684F9CA4A6A16FBD68173 /* SkillProgressionTests.swift in Sources */,
 				C5B2C25F5A1D90C5333AE349 /* HistoryCorrectionTests.swift in Sources */,
 				44A8CD3A57667C2617ADA0AD /* BackupTests.swift in Sources */,
+				B0CF5F1E0C40CC3BDBD4A053 /* ConsistencyStatsTests.swift in Sources */,
+				FFA9D21842CF6DC59EF1443E /* ActivityEditTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

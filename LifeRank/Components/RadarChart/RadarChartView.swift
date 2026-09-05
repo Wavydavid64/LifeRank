@@ -9,6 +9,8 @@ struct RadarChartView: View {
     /// Attribute level the outer ring represents, supplied per rank so the
     /// polygon grows within a rank and the chart widens on promotion.
     let ceiling: Double
+    /// Matches the rank badge, so promotion recolors the chart too.
+    var tint: Color = .accentColor
 
     private let axes = Attribute.allCases
     private let ringCount = 4
@@ -60,8 +62,8 @@ struct RadarChartView: View {
                 index == 0 ? build.move(to: vertex) : build.addLine(to: vertex)
             }
             build.closeSubpath()
-            context.fill(build, with: .color(.accentColor.opacity(0.30)))
-            context.stroke(build, with: .color(.accentColor), lineWidth: 2)
+            context.fill(build, with: .color(tint.opacity(0.30)))
+            context.stroke(build, with: .color(tint), lineWidth: 2)
 
             for (index, attribute) in axes.enumerated() {
                 var label = context.resolve(Text(attribute.displayName).font(.caption2))

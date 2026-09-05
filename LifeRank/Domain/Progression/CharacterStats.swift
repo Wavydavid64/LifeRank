@@ -11,6 +11,10 @@ struct CharacterStats: Equatable {
     /// redistribution of the same XP, so summing it too would double-count.
     var totalXP: Int { skillXP.values.reduce(0, +) }
 
+    /// ponytail: folds the entire ledger, and views call it from `body`, so it
+    /// runs on every render. Fine at ~8 events per activity; if the character
+    /// screen ever feels sluggish this is the first thing to cache, keyed off
+    /// the ledger count.
     static func derive(from events: [XPEvent]) -> CharacterStats {
         var skills: [Skill.ID: Int] = [:]
         var attributes: [Attribute: Int] = [:]

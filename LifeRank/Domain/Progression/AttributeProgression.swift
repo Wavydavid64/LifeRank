@@ -18,6 +18,10 @@ enum AttributeProgression {
         return baseLevelCost * level * (level + 1) / 2
     }
 
+    /// ponytail: counts up one level at a time — O(√xp), so ~20 iterations at
+    /// realistic XP but ~28,000 at a billion. Kept because it is obviously
+    /// correct and matches `cumulativeXP` by construction. The closed form
+    /// `floor((-1 + sqrt(1 + 8·xp/base)) / 2)` replaces it if that ever matters.
     static func level(forXP xp: Int) -> Int {
         guard xp > 0 else { return 0 }
         var level = 0

@@ -52,7 +52,7 @@ enum RankRequirements {
     /// The attribute level a rank's chart is scaled to — roughly where a
     /// primary attribute lands by the time that rank is cleared, with headroom.
     /// Attributes grow inside the band during a rank, and promotion widens the
-    /// band, so progression stays visible instead of self-normalising away.
+    /// band, so progression stays visible instead of self-normalizing away.
     ///
     /// Every rank must have a value: a missing one would collapse the scale.
     static func attributeCeiling(for rank: Rank) -> Int {
