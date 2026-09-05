@@ -11,23 +11,67 @@ struct ActivityStore {
     /// transaction. A failed save rolls back rather than leaving an activity
     /// with partial or missing XP (DESIGN.md §36).
     func log(_ activity: Activity, skill: Skill) throws {
-        let existing = try activities()
+        let prior = try activities().filter { $0.date <= activity.date }
 
         context.insert(ActivityRecord(activity))
-        for event in ProgressionEngine.xpEvents(for: activity, skill: skill) {
+        for event in xpEvents(for: activity, skill: skill, prior: prior) {
             context.insert(XPEventRecord(event))
         }
 
-        for event in questBonusEvents(for: activity, existing: existing) {
-            context.insert(XPEventRecord(event))
+        try saveOrRollback()
+    }
+
+    /// Removes an activity and every XPEvent it produced. Events are keyed by
+    /// `activityID`, so this leaves no unexplained XP behind (§10, §26).
+    ///
+    /// An imported workout is also tombstoned, otherwise the next import would
+    /// simply bring it back.
+    func delete(activityID: Activity.ID) throws {
+        let records = try context.fetch(FetchDescriptor<ActivityRecord>())
+            .filter { $0.id == activityID }
+
+        for record in records {
+            if let identifier = record.externalIdentifier {
+                context.insert(IgnoredWorkoutRecord(externalIdentifier: identifier))
+            }
+            context.delete(record)
         }
 
-        do {
-            try context.save()
-        } catch {
-            context.rollback()
-            throw error
+        let events = try context.fetch(FetchDescriptor<XPEventRecord>())
+            .filter { $0.activityID == activityID }
+        events.forEach(context.delete)
+
+        try saveOrRollback()
+    }
+
+    /// Rebuilds the whole XP ledger from the activities that remain.
+    ///
+    /// Replays chronologically rather than patching in place, because quest
+    /// bonuses depend on what came before — the same reason a partial fixup
+    /// would drift. Balance changes to the XP formula are picked up here (§26).
+    func recalculateXP() throws {
+        let ordered = try activities().sorted { $0.date < $1.date }
+
+        try context.fetch(FetchDescriptor<XPEventRecord>()).forEach(context.delete)
+
+        var replayed: [Activity] = []
+        for activity in ordered {
+            defer { replayed.append(activity) }
+            guard let skill = SeedData.skills.first(where: { $0.id == activity.skillID }) else { continue }
+
+            for event in xpEvents(for: activity, skill: skill, prior: replayed) {
+                context.insert(XPEventRecord(event))
+            }
         }
+
+        try saveOrRollback()
+    }
+
+    /// Earned XP plus any quest bonus the activity triggers, given what was
+    /// logged before it.
+    private func xpEvents(for activity: Activity, skill: Skill, prior: [Activity]) -> [XPEvent] {
+        ProgressionEngine.xpEvents(for: activity, skill: skill)
+            + questBonusEvents(for: activity, existing: prior)
     }
 
     /// Bonus XP for any quest this activity pushes over its target. Evaluated
@@ -55,19 +99,35 @@ struct ActivityStore {
         }
     }
 
+    private func saveOrRollback() throws {
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            throw error
+        }
+    }
+
     func activities() throws -> [Activity] {
         try context.fetch(FetchDescriptor<ActivityRecord>()).map(\.domain)
     }
 
-    /// Whether a workout with this source identifier has already been imported.
+    /// Whether this source workout has already been dealt with — either it is
+    /// in the ledger, or the player deleted it and does not want it back.
     /// Guarding on this is what stops one HealthKit workout awarding XP twice,
     /// which DESIGN.md §21 treats as a correctness requirement.
     func hasImported(externalIdentifier: String) throws -> Bool {
-        var descriptor = FetchDescriptor<ActivityRecord>(
+        var activityDescriptor = FetchDescriptor<ActivityRecord>(
             predicate: #Predicate { $0.externalIdentifier == externalIdentifier }
         )
-        descriptor.fetchLimit = 1
-        return try !context.fetch(descriptor).isEmpty
+        activityDescriptor.fetchLimit = 1
+        if try !context.fetch(activityDescriptor).isEmpty { return true }
+
+        var ignoredDescriptor = FetchDescriptor<IgnoredWorkoutRecord>(
+            predicate: #Predicate { $0.externalIdentifier == externalIdentifier }
+        )
+        ignoredDescriptor.fetchLimit = 1
+        return try !context.fetch(ignoredDescriptor).isEmpty
     }
 
     func xpEvents() throws -> [XPEvent] {

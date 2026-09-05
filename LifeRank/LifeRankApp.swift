@@ -19,6 +19,7 @@ struct LifeRankApp: App {
             XPEventRecord.self,
             CharacterRecord.self,
             ObjectiveCompletionRecord.self,
+            IgnoredWorkoutRecord.self,
         ])
     }
 }

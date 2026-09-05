@@ -7,6 +7,26 @@ import SwiftData
 struct CharacterView: View {
     @Query private var events: [XPEventRecord]
     @Query private var characters: [CharacterRecord]
+    @Query private var activityRecords: [ActivityRecord]
+    @Query private var completions: [ObjectiveCompletionRecord]
+
+    private var status: PromotionStatus {
+        let activities = activityRecords.map(\.domain)
+        let manualCompletions = Set(completions.map(\.objectiveID))
+
+        return PromotionEngine.status(
+            currentRank: rank,
+            stats: stats,
+            skillRanks: SkillProgression.ranks(
+                stats: stats,
+                activities: activities,
+                manualCompletions: manualCompletions
+            ),
+            activities: activities,
+            trials: TrialSeed.trials,
+            manualCompletions: manualCompletions
+        )
+    }
 
     private var stats: CharacterStats {
         CharacterStats.derive(from: events.map(\.domain))
@@ -47,6 +67,25 @@ struct CharacterView: View {
                     overallProgress
                 }
 
+                if let nextRank = status.nextRank {
+                    Section("Next Promotion") {
+                        requirement("XP", status.xp)
+                        requirement("Skills at \(nextRank.displayName)", status.skills)
+                        requirement("Attributes", status.attributes)
+
+                        NavigationLink {
+                            TrialsView()
+                        } label: {
+                            HStack {
+                                Text("Promotion Trial")
+                                Spacer()
+                                Text(trialLabel)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                }
+
                 Section("Attributes") {
                     ForEach(Attribute.allCases) { attribute in
                         attributeRow(attribute)
@@ -55,6 +94,25 @@ struct CharacterView: View {
 
             }
             .navigationTitle("Character")
+        }
+    }
+
+    private var trialLabel: String {
+        if status.canPromote { return "Ready" }
+        if !status.trialUnlocked { return "Locked" }
+        let done = status.trial.count(where: \.isComplete)
+        return "\(done) / \(status.trial.count)"
+    }
+
+    private func requirement(_ title: String, _ progress: RequirementProgress) -> some View {
+        HStack {
+            Image(systemName: progress.isMet ? "checkmark.circle.fill" : "circle")
+                .foregroundStyle(progress.isMet ? AnyShapeStyle(.tint) : AnyShapeStyle(.secondary))
+            Text(title)
+            Spacer()
+            Text("\(progress.current) / \(progress.required)")
+                .monospacedDigit()
+                .foregroundStyle(.secondary)
         }
     }
 

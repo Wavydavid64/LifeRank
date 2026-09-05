@@ -23,8 +23,8 @@ struct ContentView: View {
             Tab("Quests", systemImage: "checklist") {
                 QuestsView()
             }
-            Tab("Trials", systemImage: "flag.checkered") {
-                TrialsView()
+            Tab("History", systemImage: "clock.arrow.circlepath") {
+                HistoryView()
             }
         }
     }
@@ -33,7 +33,10 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .modelContainer(
-            for: [ActivityRecord.self, XPEventRecord.self, CharacterRecord.self, ObjectiveCompletionRecord.self],
+            for: [
+                ActivityRecord.self, XPEventRecord.self,
+                CharacterRecord.self, ObjectiveCompletionRecord.self, IgnoredWorkoutRecord.self,
+            ],
             inMemory: true
         )
 }
