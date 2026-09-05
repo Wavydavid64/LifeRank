@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UniformTypeIdentifiers
 
 /// Chronological activity history with correction (DESIGN.md §26).
 struct HistoryView: View {
@@ -10,6 +11,11 @@ struct HistoryView: View {
 
     @State private var errorMessage: String?
     @State private var isRecalculating = false
+    @State private var exportFile: BackupFile?
+    @State private var isExporting = false
+    @State private var isImporting = false
+    @State private var pendingRestore: URL?
+    @State private var statusMessage: String?
 
     /// XP awarded per activity, counting skill XP only — attribute XP is the
     /// same XP redistributed, so adding both would double the figure.
@@ -53,8 +59,41 @@ struct HistoryView: View {
                         Text("Rebuilds the XP ledger from your activities. Use after changing XP balance.")
                     }
                 }
+
+                Section {
+                    Button("Export Backup") { export() }
+                    Button("Restore from Backup") { isImporting = true }
+                } header: {
+                    Text("Backup")
+                } footer: {
+                    Text(statusMessage ?? "Exports everything as JSON. Restoring replaces all current data.")
+                }
             }
             .navigationTitle("History")
+            .fileExporter(
+                isPresented: $isExporting,
+                document: exportFile,
+                contentType: .json,
+                defaultFilename: "LifeRank-Backup"
+            ) { result in
+                if case .failure(let error) = result { errorMessage = error.localizedDescription }
+            }
+            .fileImporter(isPresented: $isImporting, allowedContentTypes: [.json]) { result in
+                switch result {
+                case .success(let url): pendingRestore = url
+                case .failure(let error): errorMessage = error.localizedDescription
+                }
+            }
+            .alert(
+                "Replace all data?",
+                isPresented: .constant(pendingRestore != nil),
+                presenting: pendingRestore
+            ) { url in
+                Button("Cancel", role: .cancel) { pendingRestore = nil }
+                Button("Restore", role: .destructive) { restore(from: url) }
+            } message: { _ in
+                Text("Every activity, XP event and rank currently in LifeRank will be replaced by the backup.")
+            }
             .alert("Something went wrong", isPresented: .constant(errorMessage != nil)) {
                 Button("OK") { errorMessage = nil }
             } message: {
@@ -96,6 +135,30 @@ struct HistoryView: View {
             for record in records {
                 try store.delete(activityID: record.id)
             }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    private func export() {
+        do {
+            exportFile = BackupFile(data: try BackupService(context: context).export())
+            isExporting = true
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    private func restore(from url: URL) {
+        pendingRestore = nil
+
+        // A file picked from Files lives outside the app's sandbox.
+        let needsRelease = url.startAccessingSecurityScopedResource()
+        defer { if needsRelease { url.stopAccessingSecurityScopedResource() } }
+
+        do {
+            try BackupService(context: context).restore(from: try Data(contentsOf: url))
+            statusMessage = "Backup restored."
         } catch {
             errorMessage = error.localizedDescription
         }
