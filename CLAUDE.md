@@ -27,12 +27,16 @@ scope. Do not restate its values here — two copies drift and produce bugs.
 ## Testing
 
 ```
-xcodebuild test -project LifeRank.xcodeproj -scheme LifeRank \
+xcodebuild clean test -project LifeRank.xcodeproj -scheme LifeRank \
   -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
 
-`LifeRankTests` is a logic-only bundle (no `TEST_HOST`) — it runs the pure
-domain layer without launching the app.
+Use `clean` before claiming a warning count. Incremental builds do not re-emit
+warnings for unchanged files, so a warning-free incremental run proves nothing —
+a batch of actor-isolation warnings hid behind exactly that for several stages.
+
+137 tests. `LifeRankTests` covers the domain layer plus persistence through
+in-memory `ModelContainer`s, so nothing needs the app running.
 
 ## Current state
 
@@ -48,6 +52,22 @@ LifeRank/
   Components/   RadarChart, XPBar, RankBadge
 ```
 
+12 skills, 11 quests, 72 skill challenges, 6 promotion trials — all in
+`Data/Seed/`.
+
+### Actor isolation
+
+The target sets `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`, which would make
+domain value types main-actor-isolated *including their protocol conformances*.
+SwiftData and Swift Testing then touch those conformances from nonisolated
+contexts — warnings today, errors under the Swift 6 language mode.
+
+Everything in `Domain/`, `Data/Seed/` and the import boundary is therefore
+declared `nonisolated`. Keep new domain types that way; it is also what §32
+asks for, since progression must run anywhere, not only on the main actor.
+`ActivityStore`, `CharacterStore`, `BackupService` and `ActivityImporter` stay
+`@MainActor` — they drive a `ModelContext`.
+
 ### Things worth knowing before changing balance
 
 - Levels, skill ranks and quest progress are **derived** from the XP ledger.
@@ -61,12 +81,23 @@ LifeRank/
     clause. This is why `RankRequirements` departs from §15's attribute
     minimums, which are unreachable against the level curve.
   - `ceilingLeavesHeadroomAtEachRankThreshold` — radar ceilings vs. real levels.
+  - `everyAttributeIsReachableFromSomeSkill` — every attribute needs a skill
+    that genuinely feeds it. Knowledge once had none and Mobility only 5% of
+    one skill, which made S rank (all 8 attributes at level 20) impossible no
+    matter how much was logged.
   Change `AttributeProgression.baseLevelCost` or any threshold and these fail
   loudly instead of shipping an unreachable rank.
 - Quest bonus XP is keyed to the activity that crossed the target, so deleting
-  that activity reverses the bonus too.
-- `ActivityStore.recalculateXP()` rebuilds the ledger by chronological replay.
-  Run it after changing the XP formula.
+  or editing that activity moves the bonus with it.
+- `ActivityStore.recalculateXP()` rebuilds the ledger by chronological replay,
+  and `update(_:)` calls it. Replay rather than a local patch, because an edit
+  can change *which* activity crossed a quest target.
+- Deleting an imported activity writes an `IgnoredWorkoutRecord` tombstone.
+  Without it the next Health sync would simply re-add the workout.
+- Schema is pinned by `LifeRankSchemaV1` with a `SchemaMigrationPlan`. Adding a
+  model or optional property: extend V1. Anything structural (rename, type
+  change, optional → non-optional): add V2 and a `MigrationStage`, or the store
+  fails to open and takes real progression with it.
 
 ### Outstanding
 
@@ -74,5 +105,9 @@ LifeRank/
   `HKWorkout` — it is tested only against synthetic `ImportedActivity` values.
   On a device, check whether Garmin runs carry `distanceWalkingRunning`, and
   whether Hevy reports `.traditionalStrengthTraining` or
-  `.functionalStrengthTraining` (the latter maps to nothing today).
-- Editing logged activities is not implemented; delete and re-log instead.
+  `.functionalStrengthTraining` (the latter maps to nothing today). The
+  `.cycling`, `.paddleSports`, `.yoga` and `.flexibility` mappings are equally
+  unverified.
+- Balance numbers are estimates, not measurements. They want tuning against
+  real logged data; everything derives from the ledger, so retuning is
+  retroactive and free.
