@@ -28,15 +28,29 @@ enum ProgressionEngine {
     static func xpEvents(for activity: Activity, skill: Skill) -> [XPEvent] {
         precondition(activity.skillID == skill.id, "Activity/skill mismatch")
 
-        let total = skillXP(for: activity)
+        return xpEvents(
+            activityID: activity.id,
+            skill: skill,
+            amount: skillXP(for: activity),
+            date: activity.date
+        )
+    }
 
+    /// Awards an explicit amount of skill XP and distributes it, for XP that
+    /// does not come from an activity's own duration and distance — quest
+    /// bonuses. Routing it through the same split keeps attribute XP a faithful
+    /// redistribution of skill XP.
+    ///
+    /// Events stay keyed to the activity that earned them, so removing that
+    /// activity reverses the bonus with it (§26).
+    static func xpEvents(activityID: Activity.ID, skill: Skill, amount: Int, date: Date) -> [XPEvent] {
         var events = [
-            XPEvent(activityID: activity.id, target: .skill(skill.id), amount: total, date: activity.date)
+            XPEvent(activityID: activityID, target: .skill(skill.id), amount: amount, date: date)
         ]
 
-        for (attribute, amount) in distribute(total: total, weights: skill.attributeWeights) where amount != 0 {
+        for (attribute, share) in distribute(total: amount, weights: skill.attributeWeights) where share != 0 {
             events.append(
-                XPEvent(activityID: activity.id, target: .attribute(attribute), amount: amount, date: activity.date)
+                XPEvent(activityID: activityID, target: .attribute(attribute), amount: share, date: date)
             )
         }
 

@@ -90,14 +90,18 @@ struct ImportTests {
         #expect(try store.stats().skillXP["running"] == 80)
     }
 
+    /// Short runs on purpose: two 5.1 mile imports would clear the weekly
+    /// 10 mile quest and fold a bonus into the total, which has nothing to do
+    /// with what this test is checking.
     @Test func distinctWorkoutsBothImport() throws {
         let store = try makeStore()
 
         let summary = try ActivityImporter(store: store)
-            .import([workout(id: "HK-1"), workout(id: "HK-2")])
+            .import([workout(id: "HK-1", miles: 2), workout(id: "HK-2", miles: 2)])
 
         #expect(summary == .init(imported: 2, duplicates: 0, unclassified: 0))
-        #expect(try store.stats().skillXP["running"] == 160)
+        // 42 min + 2 mi * 7.5 = 57 XP each.
+        #expect(try store.stats().skillXP["running"] == 114)
     }
 
     // MARK: - Unclassified workouts (§36)

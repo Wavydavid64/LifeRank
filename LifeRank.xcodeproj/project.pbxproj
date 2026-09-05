@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		25779AE3D98F7185F8681405 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CB44B28EDCA175EA3BF62D /* Foundation.framework */; };
 		3E8D49B4AF023907051E36D5 /* ImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0743B2C0A29D2162152C102A /* ImportTests.swift */; };
+		495B9EBD47069606AB48DFBA /* QuestEvaluatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487E9A80783BEB3C8BE8DA7B /* QuestEvaluatorTests.swift */; };
 		7668A2613DE44AE156E6324E /* ProgressionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3646A7DD0EFD6A1672AC5A /* ProgressionEngineTests.swift */; };
 		84910BBCF870612C730E6A01 /* ActivityStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ACFEEB6B5618952E2448DD /* ActivityStoreTests.swift */; };
 		850DC7A12F68C5415CF99E25 /* SkillRankRequirementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B8DC5DC1315F13BF6D2BEE /* SkillRankRequirementsTests.swift */; };
@@ -16,6 +17,7 @@
 		C2BC4A90CEFAE358961915C6 /* RankRequirementsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB94A5E7779A3EEAE8EBE329 /* RankRequirementsTests.swift */; };
 		DC7A6BA31C22C90D51CF4ACD /* AttributeProgressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FD30EECD384606CAA3B2F7 /* AttributeProgressionTests.swift */; };
 		F9BCFF3719BF226C0E09CC75 /* CharacterStatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2ACD34841CE35E923404B1 /* CharacterStatsTests.swift */; };
+		FEBF85AA26FD096C1D3A24BA /* QuestBonusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192EDD39767C7E7A19FCA985 /* QuestBonusTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,7 +33,9 @@
 /* Begin PBXFileReference section */
 		0743B2C0A29D2162152C102A /* ImportTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImportTests.swift; sourceTree = "<group>"; };
 		189D93018E000846FA8A5C02 /* LifeRankTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeRankTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		192EDD39767C7E7A19FCA985 /* QuestBonusTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestBonusTests.swift; sourceTree = "<group>"; };
 		28FD30EECD384606CAA3B2F7 /* AttributeProgressionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AttributeProgressionTests.swift; sourceTree = "<group>"; };
+		487E9A80783BEB3C8BE8DA7B /* QuestEvaluatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestEvaluatorTests.swift; sourceTree = "<group>"; };
 		5F3646A7DD0EFD6A1672AC5A /* ProgressionEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProgressionEngineTests.swift; sourceTree = "<group>"; };
 		630C00B5304BB7FB001A8B8C /* LifeRank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeRank.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D2ACD34841CE35E923404B1 /* CharacterStatsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CharacterStatsTests.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 				FB94A5E7779A3EEAE8EBE329 /* RankRequirementsTests.swift */,
 				F7B8DC5DC1315F13BF6D2BEE /* SkillRankRequirementsTests.swift */,
 				0743B2C0A29D2162152C102A /* ImportTests.swift */,
+				487E9A80783BEB3C8BE8DA7B /* QuestEvaluatorTests.swift */,
+				192EDD39767C7E7A19FCA985 /* QuestBonusTests.swift */,
 			);
 			path = LifeRankTests;
 			sourceTree = "<group>";
@@ -227,6 +233,8 @@
 				C2BC4A90CEFAE358961915C6 /* RankRequirementsTests.swift in Sources */,
 				850DC7A12F68C5415CF99E25 /* SkillRankRequirementsTests.swift in Sources */,
 				3E8D49B4AF023907051E36D5 /* ImportTests.swift in Sources */,
+				495B9EBD47069606AB48DFBA /* QuestEvaluatorTests.swift in Sources */,
+				FEBF85AA26FD096C1D3A24BA /* QuestBonusTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

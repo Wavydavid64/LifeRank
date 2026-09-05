@@ -20,6 +20,10 @@ struct ActivityStoreTests {
 
     /// DESIGN.md §43, the workflow Stage 2 exists to prove: logging 30 minutes
     /// of Chinese Calligraphy raises the skill and its three attributes.
+    ///
+    /// 30 minutes also completes the daily calligraphy quest, so the total is
+    /// 30 earned plus its 5 XP bonus. The two awards are distributed separately
+    /// (17/9/4 then 3/1/1), which is why the attributes land on 20/10/5.
     @Test func loggingCalligraphyPersistsSkillAndAttributeXP() throws {
         let store = try makeStore()
         let calligraphy = skill("chinese-calligraphy")
@@ -30,11 +34,11 @@ struct ActivityStoreTests {
         )
 
         let stats = try store.stats()
-        #expect(stats.skillXP["chinese-calligraphy"] == 30)
-        #expect(stats.attributeXP[.dexterity] == 17)
-        #expect(stats.attributeXP[.creativity] == 9)
-        #expect(stats.attributeXP[.discipline] == 4)
-        #expect(stats.totalXP == 30)
+        #expect(stats.skillXP["chinese-calligraphy"] == 35)
+        #expect(stats.attributeXP[.dexterity] == 20)
+        #expect(stats.attributeXP[.creativity] == 10)
+        #expect(stats.attributeXP[.discipline] == 5)
+        #expect(stats.totalXP == 35)
     }
 
     /// Attribute XP must survive the round trip through SwiftData without loss —
@@ -48,8 +52,9 @@ struct ActivityStoreTests {
             skill: calligraphy
         )
 
-        let attributeTotal = try store.stats().attributeXP.values.reduce(0, +)
-        #expect(attributeTotal == 30)
+        let stats = try store.stats()
+        let attributeTotal = stats.attributeXP.values.reduce(0, +)
+        #expect(attributeTotal == stats.skillXP["chinese-calligraphy"])
     }
 
     @Test func loggingTwoActivitiesAccumulates() throws {
@@ -63,7 +68,9 @@ struct ActivityStoreTests {
             )
         }
 
-        #expect(try store.stats().skillXP["chinese-calligraphy"] == 60)
+        // 60 earned across the two sessions, plus the daily quest's 5 XP bonus,
+        // paid once by the session that crossed 30 minutes.
+        #expect(try store.stats().skillXP["chinese-calligraphy"] == 65)
     }
 
     /// XPTarget is an enum with associated values; this pins that it round-trips
@@ -91,8 +98,11 @@ struct ActivityStoreTests {
 
         try store.log(activity, skill: calligraphy)
 
+        // Four for the session itself, four more for the quest bonus it
+        // triggered — all of them keyed to the activity that earned them, so
+        // removing it would reverse the whole lot (§26).
         let events = try store.xpEvents()
-        #expect(events.count == 4)
+        #expect(events.count == 8)
         #expect(events.allSatisfy { $0.activityID == activity.id })
     }
 }

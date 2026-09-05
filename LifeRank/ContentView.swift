@@ -20,6 +20,9 @@ struct ContentView: View {
             Tab("Log", systemImage: "plus.circle") {
                 LogActivityView()
             }
+            Tab("Quests", systemImage: "checklist") {
+                QuestsView()
+            }
         }
     }
 }
