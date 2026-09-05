@@ -6,6 +6,13 @@ enum Rank: Int, CaseIterable, Comparable, Codable, Identifiable {
 
     var id: Int { rawValue }
 
+    /// Every character begins here (DESIGN.md §4).
+    static let starting = Rank.f
+
+    /// The next rank up, or nil at the top of the ladder. Ranks beyond S can be
+    /// appended to the enum without touching this (§4).
+    var next: Rank? { Rank(rawValue: rawValue + 1) }
+
     var displayName: String {
         switch self {
         case .f: return "F"
