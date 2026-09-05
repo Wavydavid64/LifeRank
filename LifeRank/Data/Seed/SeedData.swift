@@ -7,7 +7,7 @@ import Foundation
 /// and Mobility once had none, which made S rank (all 8 attributes at level 20)
 /// mathematically unreachable. `everyAttributeIsReachableFromSomeSkill` guards
 /// against that returning.
-enum SeedData {
+nonisolated enum SeedData {
     static let attributes: [Attribute] = Attribute.allCases
 
     static let skills: [Skill] = [

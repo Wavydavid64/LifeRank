@@ -1,7 +1,7 @@
 import Foundation
 
 /// Converts Activities into XPEvents. Pure Swift — no SwiftUI, SwiftData, or HealthKit.
-enum ProgressionEngine {
+nonisolated enum ProgressionEngine {
 
     // MARK: - Balance constants
     // Game-balance values live here, not in views (DESIGN.md §34). These are

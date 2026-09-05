@@ -3,7 +3,7 @@ import Foundation
 /// Progression totals derived from the XP ledger. DESIGN.md §10: XPEvents are
 /// the source of truth — totals are computed, never stored as mutable running
 /// counters that could drift from the ledger.
-struct CharacterStats: Equatable {
+nonisolated struct CharacterStats: Equatable {
     let skillXP: [Skill.ID: Int]
     let attributeXP: [Attribute: Int]
 

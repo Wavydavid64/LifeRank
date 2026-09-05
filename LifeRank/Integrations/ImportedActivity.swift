@@ -3,7 +3,7 @@ import Foundation
 /// A workout discovered in an external source, before it becomes progression.
 /// Deliberately free of HealthKit types — normalization happens here so nothing
 /// downstream of this boundary knows where the data came from (DESIGN.md §32).
-struct ImportedActivity: Identifiable, Hashable {
+nonisolated struct ImportedActivity: Identifiable, Hashable {
     /// Stable identifier from the source, used to reject repeat imports (§21).
     let id: String
     /// Nil when the workout type has no skill mapping.

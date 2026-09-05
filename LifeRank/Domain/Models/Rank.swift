@@ -1,7 +1,7 @@
 import Foundation
 
 /// The player's overall rank tier, ordered from lowest to highest.
-enum Rank: Int, CaseIterable, Comparable, Codable, Identifiable {
+nonisolated enum Rank: Int, CaseIterable, Comparable, Codable, Identifiable {
     case f, e, d, c, b, a, s
 
     var id: Int { rawValue }

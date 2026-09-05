@@ -2,7 +2,7 @@ import Foundation
 
 /// Something the user actually did in the real world. Activities are the
 /// source of truth that the ProgressionEngine converts into XPEvents.
-struct Activity: Identifiable, Codable, Hashable {
+nonisolated struct Activity: Identifiable, Codable, Hashable {
     let id: UUID
     let skillID: Skill.ID
     let name: String

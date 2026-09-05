@@ -2,7 +2,7 @@ import Foundation
 
 /// A milestone that must be demonstrated before a skill reaches `rank`
 /// (DESIGN.md §13).
-struct SkillChallenge: Identifiable, Codable, Hashable {
+nonisolated struct SkillChallenge: Identifiable, Codable, Hashable {
     let skillID: Skill.ID
     /// The rank this challenge unlocks.
     let rank: Rank
@@ -13,7 +13,7 @@ struct SkillChallenge: Identifiable, Codable, Hashable {
 
 /// Works out where a skill actually stands. XP alone never advances a skill
 /// rank — the rank's challenge must be cleared too (§13).
-enum SkillProgression {
+nonisolated enum SkillProgression {
 
     static func rank(
         for skill: Skill,

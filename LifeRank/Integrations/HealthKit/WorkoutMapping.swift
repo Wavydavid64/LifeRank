@@ -4,7 +4,7 @@ import HealthKit
 /// The one place HealthKit workout types turn into LifeRank skills
 /// (DESIGN.md §19). Keeping this centralized stops workout-type switches
 /// spreading through the app.
-enum WorkoutMapping {
+nonisolated enum WorkoutMapping {
 
     static let skillIDsByWorkoutType: [HKWorkoutActivityType: Skill.ID] = [
         .running: "running",

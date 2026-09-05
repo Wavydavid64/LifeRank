@@ -3,7 +3,7 @@ import Foundation
 /// Turns accumulated attribute XP into a level. Levels get progressively more
 /// expensive (DESIGN.md §5): reaching level n costs `baseLevelCost * n`, so the
 /// first level costs 25 XP, the second 50 more, the third 75 more.
-enum AttributeProgression {
+nonisolated enum AttributeProgression {
 
     /// Balance constant (§34). Tuned so a year of steady training on a primary
     /// attribute (~8,400 XP) lands near level 25, matching the numeric range in

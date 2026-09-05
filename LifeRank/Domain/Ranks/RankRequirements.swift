@@ -2,7 +2,7 @@ import Foundation
 
 /// Everything that must be true before a rank can be entered (DESIGN.md §15).
 /// Meeting all of it makes the player *eligible*; it never promotes them (§3.4).
-struct RankDefinition: Hashable {
+nonisolated struct RankDefinition: Hashable {
     let rank: Rank
     let xpRequired: Int
     let requiredSkillRank: Rank
@@ -12,7 +12,7 @@ struct RankDefinition: Hashable {
 }
 
 /// Rank configuration, kept out of UI code (§4, §15). Placeholder balance.
-enum RankRequirements {
+nonisolated enum RankRequirements {
 
     /// Attribute minimums deliberately depart from §15's 10/20/30/40/50/60.
     ///

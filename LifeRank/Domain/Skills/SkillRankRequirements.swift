@@ -6,7 +6,7 @@ import Foundation
 ///
 /// XP alone never grants a skill rank — §13 requires a demonstrated challenge as
 /// well. These thresholds only describe the XP half of that gate.
-enum SkillRankRequirements {
+nonisolated enum SkillRankRequirements {
 
     /// Placeholder balance values. The F→E figure of 500 comes from §25's
     /// worked example ("340 / 500 XP").

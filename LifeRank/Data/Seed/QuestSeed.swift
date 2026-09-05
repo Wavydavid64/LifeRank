@@ -2,7 +2,7 @@ import Foundation
 
 /// Manually configured quests. DESIGN.md §16 rules out a procedural quest
 /// generator for the MVP, so these are hand-written and easy to edit.
-enum QuestSeed {
+nonisolated enum QuestSeed {
     static let quests: [Quest] = [
         Quest(
             id: "daily-calligraphy",

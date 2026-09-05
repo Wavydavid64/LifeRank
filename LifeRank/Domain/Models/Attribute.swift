@@ -1,7 +1,7 @@
 import Foundation
 
 /// A character attribute that skills distribute XP into.
-enum Attribute: String, CaseIterable, Codable, Identifiable {
+nonisolated enum Attribute: String, CaseIterable, Codable, Identifiable {
     case strength = "Strength"
     case endurance = "Endurance"
     case dexterity = "Dexterity"

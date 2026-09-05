@@ -1,7 +1,7 @@
 import Foundation
 
 /// One requirement row on the promotion screen (DESIGN.md §23, §27).
-struct RequirementProgress: Equatable {
+nonisolated struct RequirementProgress: Equatable {
     let current: Int
     let required: Int
 
@@ -13,7 +13,7 @@ struct RequirementProgress: Equatable {
 }
 
 /// Everything the player needs to know about their next promotion.
-struct PromotionStatus: Equatable {
+nonisolated struct PromotionStatus: Equatable {
     let currentRank: Rank
     let nextRank: Rank?
     let xp: RequirementProgress
@@ -46,7 +46,7 @@ struct PromotionStatus: Equatable {
 }
 
 /// Evaluates promotion eligibility. Pure — no SwiftUI, SwiftData or HealthKit.
-enum PromotionEngine {
+nonisolated enum PromotionEngine {
 
     static func status(
         currentRank: Rank,

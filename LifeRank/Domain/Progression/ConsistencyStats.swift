@@ -5,7 +5,7 @@ import Foundation
 /// Deliberately not a streak. Missing one day lowers the figure slightly and
 /// nothing else — it can never invalidate months of work, and no rank or XP
 /// depends on it. It is a statistic, not a mechanic.
-enum ConsistencyStats {
+nonisolated enum ConsistencyStats {
 
     static let windowDays = 30
 

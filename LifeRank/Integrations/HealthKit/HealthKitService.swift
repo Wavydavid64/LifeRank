@@ -1,7 +1,7 @@
 import Foundation
 import HealthKit
 
-enum HealthKitError: LocalizedError {
+nonisolated enum HealthKitError: LocalizedError {
     case unavailable
     case authorizationDenied
 
@@ -18,7 +18,7 @@ enum HealthKitError: LocalizedError {
 /// Reads workouts from Apple Health and hands back plain ImportedActivity
 /// values. Garmin and Hevy already sync into Health, so LifeRank never talks to
 /// them directly (DESIGN.md §2, §18, §20).
-struct HealthKitService: ActivityProvider {
+nonisolated struct HealthKitService: ActivityProvider {
     private let store = HKHealthStore()
 
     /// Only what is actually used. Distance is read because running XP depends

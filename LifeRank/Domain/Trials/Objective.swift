@@ -2,7 +2,7 @@ import Foundation
 
 /// Thresholds a single activity must meet. All bounds are optional; those left
 /// nil are not checked.
-struct ActivityCriterion: Codable, Hashable {
+nonisolated struct ActivityCriterion: Codable, Hashable {
     var minimumMiles: Double?
     var minimumMinutes: Double?
     var maximumMinutes: Double?
@@ -15,7 +15,7 @@ struct ActivityCriterion: Codable, Hashable {
     }
 }
 
-enum ObjectiveCriterion: Codable, Hashable {
+nonisolated enum ObjectiveCriterion: Codable, Hashable {
     /// Satisfied by one activity clearing the thresholds — a continuous 5K, a
     /// sub-25-minute 5K (DESIGN.md §13).
     case singleActivity(ActivityCriterion)
@@ -26,7 +26,7 @@ enum ObjectiveCriterion: Codable, Hashable {
 
 /// One demonstrable requirement. Shared by skill challenges and promotion
 /// trials so both are evaluated the same way.
-struct Objective: Identifiable, Codable, Hashable {
+nonisolated struct Objective: Identifiable, Codable, Hashable {
     let id: String
     let title: String
     /// Which skill's activities count. Nil means any skill.
@@ -39,7 +39,7 @@ struct Objective: Identifiable, Codable, Hashable {
     }
 }
 
-enum ObjectiveEvaluator {
+nonisolated enum ObjectiveEvaluator {
 
     static func isSatisfied(
         _ objective: Objective,

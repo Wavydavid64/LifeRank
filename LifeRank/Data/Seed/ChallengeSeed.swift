@@ -5,7 +5,7 @@ import Foundation
 ///
 /// A 5K is 3.107 miles. Strength challenges are manual because Hevy may not
 /// expose sets, reps or weight through Apple Health (§20).
-enum ChallengeSeed {
+nonisolated enum ChallengeSeed {
 
     static let challenges: [SkillChallenge] =
         running + cycling + hiking + kayaking

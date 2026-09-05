@@ -1,7 +1,7 @@
 import Foundation
 
 /// How often a quest's window resets (DESIGN.md §16).
-enum QuestPeriod: String, Codable, CaseIterable {
+nonisolated enum QuestPeriod: String, Codable, CaseIterable {
     case daily
     case weekly
     case oneTime
@@ -30,13 +30,13 @@ enum QuestPeriod: String, Codable, CaseIterable {
 }
 
 /// What a quest counts.
-enum QuestMetric: String, Codable {
+nonisolated enum QuestMetric: String, Codable {
     case minutes
     case miles
     case sessions
 }
 
-struct QuestObjective: Codable, Hashable {
+nonisolated struct QuestObjective: Codable, Hashable {
     let skillID: Skill.ID
     let metric: QuestMetric
     let target: Double
@@ -44,7 +44,7 @@ struct QuestObjective: Codable, Hashable {
 
 /// A short-term objective. Quests give direction; they never reward using the
 /// app, only doing the activity (§3.1).
-struct Quest: Identifiable, Codable, Hashable {
+nonisolated struct Quest: Identifiable, Codable, Hashable {
     let id: String
     let title: String
     let period: QuestPeriod
@@ -54,7 +54,7 @@ struct Quest: Identifiable, Codable, Hashable {
     var bonusXP: Int = 0
 }
 
-struct QuestProgress: Equatable {
+nonisolated struct QuestProgress: Equatable {
     let current: Double
     let target: Double
 

@@ -2,7 +2,7 @@ import Foundation
 
 /// Promotion trials (DESIGN.md §14). Each is a small cross-skill test, so
 /// ranking up means demonstrating breadth rather than grinding one activity.
-enum TrialSeed {
+nonisolated enum TrialSeed {
 
     static let trials: [PromotionTrial] = [
         PromotionTrial(rank: .e, objectives: [

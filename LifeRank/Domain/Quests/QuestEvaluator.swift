@@ -2,7 +2,7 @@ import Foundation
 
 /// Derives quest progress from logged activities (DESIGN.md §16 — completion
 /// comes from Activity data, not from a separate tracker that could drift).
-enum QuestEvaluator {
+nonisolated enum QuestEvaluator {
 
     static func progress(
         for quest: Quest,
