@@ -1,6 +1,7 @@
 import Foundation
 
-/// The attributes and skills available at MVP launch, as defined in CLAUDE.md.
+/// The attributes and skills available at MVP launch. Weights come from
+/// DESIGN.md §8 — starting tuning values, not final balance.
 enum SeedData {
     static let attributes: [Attribute] = Attribute.allCases
 
