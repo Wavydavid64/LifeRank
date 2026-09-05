@@ -14,6 +14,11 @@ struct LifeRankApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [ActivityRecord.self, XPEventRecord.self])
+        .modelContainer(for: [
+            ActivityRecord.self,
+            XPEventRecord.self,
+            CharacterRecord.self,
+            ObjectiveCompletionRecord.self,
+        ])
     }
 }

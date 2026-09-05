@@ -23,11 +23,17 @@ struct ContentView: View {
             Tab("Quests", systemImage: "checklist") {
                 QuestsView()
             }
+            Tab("Trials", systemImage: "flag.checkered") {
+                TrialsView()
+            }
         }
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: [ActivityRecord.self, XPEventRecord.self], inMemory: true)
+        .modelContainer(
+            for: [ActivityRecord.self, XPEventRecord.self, CharacterRecord.self, ObjectiveCompletionRecord.self],
+            inMemory: true
+        )
 }

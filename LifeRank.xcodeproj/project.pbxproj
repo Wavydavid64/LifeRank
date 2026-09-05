@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		029684F9CA4A6A16FBD68173 /* SkillProgressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961C35DC9F69BE1D506AC83D /* SkillProgressionTests.swift */; };
+		0E950E6212057B4129EE06A8 /* PromotionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE89EA42CD84908881D63FE /* PromotionEngineTests.swift */; };
 		25779AE3D98F7185F8681405 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CB44B28EDCA175EA3BF62D /* Foundation.framework */; };
 		3E8D49B4AF023907051E36D5 /* ImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0743B2C0A29D2162152C102A /* ImportTests.swift */; };
 		495B9EBD47069606AB48DFBA /* QuestEvaluatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487E9A80783BEB3C8BE8DA7B /* QuestEvaluatorTests.swift */; };
@@ -35,10 +37,12 @@
 		189D93018E000846FA8A5C02 /* LifeRankTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeRankTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		192EDD39767C7E7A19FCA985 /* QuestBonusTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestBonusTests.swift; sourceTree = "<group>"; };
 		28FD30EECD384606CAA3B2F7 /* AttributeProgressionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AttributeProgressionTests.swift; sourceTree = "<group>"; };
+		2CE89EA42CD84908881D63FE /* PromotionEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PromotionEngineTests.swift; sourceTree = "<group>"; };
 		487E9A80783BEB3C8BE8DA7B /* QuestEvaluatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestEvaluatorTests.swift; sourceTree = "<group>"; };
 		5F3646A7DD0EFD6A1672AC5A /* ProgressionEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProgressionEngineTests.swift; sourceTree = "<group>"; };
 		630C00B5304BB7FB001A8B8C /* LifeRank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeRank.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D2ACD34841CE35E923404B1 /* CharacterStatsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CharacterStatsTests.swift; sourceTree = "<group>"; };
+		961C35DC9F69BE1D506AC83D /* SkillProgressionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SkillProgressionTests.swift; sourceTree = "<group>"; };
 		B7ACFEEB6B5618952E2448DD /* ActivityStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActivityStoreTests.swift; sourceTree = "<group>"; };
 		C16AE90B303A25775B8AECF1 /* SeedDataTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SeedDataTests.swift; sourceTree = "<group>"; };
 		D3CB44B28EDCA175EA3BF62D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -123,6 +127,8 @@
 				0743B2C0A29D2162152C102A /* ImportTests.swift */,
 				487E9A80783BEB3C8BE8DA7B /* QuestEvaluatorTests.swift */,
 				192EDD39767C7E7A19FCA985 /* QuestBonusTests.swift */,
+				2CE89EA42CD84908881D63FE /* PromotionEngineTests.swift */,
+				961C35DC9F69BE1D506AC83D /* SkillProgressionTests.swift */,
 			);
 			path = LifeRankTests;
 			sourceTree = "<group>";
@@ -235,6 +241,8 @@
 				3E8D49B4AF023907051E36D5 /* ImportTests.swift in Sources */,
 				495B9EBD47069606AB48DFBA /* QuestEvaluatorTests.swift in Sources */,
 				FEBF85AA26FD096C1D3A24BA /* QuestBonusTests.swift in Sources */,
+				0E950E6212057B4129EE06A8 /* PromotionEngineTests.swift in Sources */,
+				029684F9CA4A6A16FBD68173 /* SkillProgressionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

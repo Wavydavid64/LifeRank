@@ -4,14 +4,22 @@ import SwiftData
 /// Skills and their current rank (DESIGN.md §24).
 struct SkillsView: View {
     @Query private var events: [XPEventRecord]
+    @Query private var activityRecords: [ActivityRecord]
+    @Query private var completions: [ObjectiveCompletionRecord]
 
     private var stats: CharacterStats {
         CharacterStats.derive(from: events.map(\.domain))
     }
 
-    /// Every skill sits at the starting rank until a challenge is cleared —
-    /// XP alone never advances a skill rank (§13).
-    private var rank: Rank { .starting }
+    /// Derived from XP *and* cleared challenges — XP alone never advances a
+    /// skill rank (§13).
+    private var ranks: [Skill.ID: Rank] {
+        SkillProgression.ranks(
+            stats: stats,
+            activities: activityRecords.map(\.domain),
+            manualCompletions: Set(completions.map(\.objectiveID))
+        )
+    }
 
     var body: some View {
         NavigationStack {
@@ -41,7 +49,7 @@ struct SkillsView: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            Text(rank.displayName)
+            Text((ranks[skill.id] ?? .starting).displayName)
                 .font(.headline.weight(.bold))
                 .monospaced()
                 .foregroundStyle(.secondary)

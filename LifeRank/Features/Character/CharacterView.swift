@@ -2,16 +2,17 @@ import SwiftUI
 import SwiftData
 
 /// The character sheet: rank, radar chart, overall XP progress and attribute
-/// levels (DESIGN.md §23). Rank is fixed at the starting rank until the
-/// promotion system lands — XP never promotes on its own (§3.4).
+/// levels (DESIGN.md §23). Rank comes from stored state and only changes when
+/// the player promotes explicitly — XP never promotes on its own (§3.4).
 struct CharacterView: View {
     @Query private var events: [XPEventRecord]
+    @Query private var characters: [CharacterRecord]
 
     private var stats: CharacterStats {
         CharacterStats.derive(from: events.map(\.domain))
     }
 
-    private var rank: Rank { .starting }
+    private var rank: Rank { characters.first?.rank ?? .starting }
 
     /// Fractional levels, so the radar responds to every session instead of
     /// sitting still until a level boundary is crossed.
